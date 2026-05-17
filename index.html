@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>clinqies.xyz — secure file sharing</title>
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;--surface:#0f0f0f;--surface2:#151515;
+  --border:#1c1c1c;--border2:#252525;--border3:#333;
+  --text:#b8b8b8;--text2:#666;--text3:#444;
+  --bright:#e0e0e0;--link:#7a7a9a;--linkh:#b0b0d0;
+  --danger:#994444;--success:#446644;
+  --mono:'Share Tech Mono','Courier New',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;min-height:100vh;letter-spacing:.03em}
+a{color:var(--link);text-decoration:none}a:hover{color:var(--linkh)}
+input,button,select{font-family:var(--mono);font-size:13px;outline:none}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh}
+.page.active{display:flex;flex-direction:column}
+
+/* ── TOASTS ── */
+#toast-container{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--surface2);border:1px solid var(--border2);padding:10px 16px;font-size:11px;letter-spacing:.08em;opacity:0;transform:translateX(20px);transition:all .2s;max-width:280px}
+.toast.show{opacity:1;transform:translateX(0)}
+.toast.success{border-color:var(--success);color:#88bb88}
+.toast.error{border-color:var(--danger);color:#cc7777}
+.toast.info{border-color:var(--border3);color:var(--text)}
+
+/* ── LOGIN ── */
+#page-login{align-items:center;justify-content:center;background:var(--bg)}
+.login-wrap{width:100%;max-width:300px;display:flex;flex-direction:column;align-items:center}
+.logo-diamonds{display:flex;gap:9px;align-items:center;justify-content:center;margin-bottom:10px}
+.d{width:7px;height:7px;border:1px solid var(--text3);transform:rotate(45deg)}
+.d.fill{background:var(--text3)}
+.logo-text{font-size:30px;letter-spacing:.28em;color:var(--bright);text-transform:uppercase;margin:4px 0;text-shadow:0 0 30px rgba(220,220,220,.1)}
+.logo-tag{font-size:11px;color:var(--text2);letter-spacing:.12em;font-style:italic;margin-bottom:24px}
+.login-box{width:100%;border:1px solid var(--border2);background:var(--surface);padding:22px;display:flex;flex-direction:column;gap:14px}
+.field-label{font-size:9px;letter-spacing:.18em;color:var(--text2);text-transform:uppercase;margin-bottom:4px}
+.field-row{display:flex;align-items:center;gap:6px}
+.pw-toggle{display:flex;font-size:9px;letter-spacing:.08em;color:var(--text2)}
+.pw-toggle span{border:1px solid var(--border2);padding:2px 5px;cursor:pointer;transition:all .1s}
+.pw-toggle span.on{background:var(--border2);color:var(--text)}
+.pw-toggle span:hover{color:var(--text)}
+input[type=text],input[type=password],input[type=email]{
+  width:100%;background:var(--bg);border:1px solid var(--border2);
+  color:var(--bright);padding:7px 9px;transition:border-color .15s;letter-spacing:.04em
+}
+input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border-color:var(--border3)}
+.btn{
+  background:transparent;border:1px solid var(--text2);color:var(--text);
+  font-size:10px;letter-spacing:.2em;padding:9px 16px;text-transform:uppercase;
+  transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px
+}
+.btn:hover{background:rgba(255,255,255,.03);border-color:var(--border3);color:var(--bright)}
+.btn:active{opacity:.7}
+.btn-full{width:100%}
+.btn-sm{font-size:9px;padding:5px 10px;letter-spacing:.12em}
+.btn-danger{border-color:var(--danger);color:#cc7777}
+.btn-danger:hover{background:rgba(150,50,50,.1);border-color:#bb5555;color:#ee9999}
+.divider{text-align:center;font-size:10px;color:var(--text2);letter-spacing:.1em;position:relative}
+.divider::before,.divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border)}
+.divider::before{left:0}.divider::after{right:0}
+.login-links{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.08em}
+.login-links a{color:var(--link);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
+.login-links a:hover{color:var(--linkh)}
+.footer-nav{margin-top:24px;display:flex;gap:18px;font-size:10px;letter-spacing:.1em;color:var(--text2)}
+.footer-nav a{color:var(--text2);transition:color .1s}
+.footer-nav a:hover{color:var(--text)}
+.err{font-size:11px;color:#cc5555;letter-spacing:.06em;text-align:center;min-height:15px}
+
+/* ── DASHBOARD ── */
+#page-dashboard{flex-direction:column}
+.topbar{border-bottom:1px solid var(--border);padding:9px 22px;display:flex;align-items:center;justify-content:space-between;background:var(--surface)}
+.topbar-logo{font-size:15px;letter-spacing:.22em;color:var(--bright);text-transform:uppercase}
+.topbar-logo em{color:var(--text2);font-size:10px;font-style:italic;margin-left:7px}
+.topbar-right{display:flex;align-items:center;gap:18px;font-size:10px;letter-spacing:.08em}
+.topbar-user{color:var(--text2)}
+.topbar-user b{color:var(--text)}
+.topbar-nav a{color:var(--link);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-left:12px}
+.topbar-nav a:hover{color:var(--bright)}
+.dash-body{flex:1;display:grid;grid-template-columns:200px 1fr}
+.sidebar{border-right:1px solid var(--border);padding:16px 12px;display:flex;flex-direction:column;gap:2px}
+.sb-section{font-size:9px;letter-spacing:.18em;color:var(--text3);text-transform:uppercase;padding:12px 8px 5px}
+.sb-item{display:flex;align-items:center;gap:8px;padding:7px 8px;cursor:pointer;font-size:11px;letter-spacing:.06em;color:var(--text2);border:1px solid transparent;transition:all .1s}
+.sb-item:hover{color:var(--text);background:rgba(255,255,255,.02)}
+.sb-item.active{color:var(--bright);background:rgba(255,255,255,.04);border-color:var(--border)}
+.sb-icon{width:13px;text-align:center;font-size:11px;opacity:.55}
+.sb-item.active .sb-icon{opacity:1}
+.sb-quota{margin-top:auto;padding:12px 8px;border-top:1px solid var(--border);font-size:10px;color:var(--text2)}
+.quota-bar{margin-top:6px;height:2px;background:var(--border2);position:relative;overflow:hidden}
+.quota-fill{position:absolute;left:0;top:0;height:100%;background:var(--text2);transition:width .4s}
+.quota-nums{display:flex;justify-content:space-between;margin-top:5px;font-size:9px;color:var(--text3)}
+.content{padding:22px;overflow-y:auto;flex:1}
+.section{display:none}.section.active{display:block}
+.sec-title{font-size:9px;letter-spacing:.2em;color:var(--text2);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between}
+.sec-title-actions{display:flex;gap:8px}
+
+/* Upload zone */
+.upload-zone{border:1px dashed var(--border2);padding:36px 22px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:22px;position:relative}
+.upload-zone:hover,.upload-zone.over{border-color:var(--border3);background:rgba(255,255,255,.015)}
+.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.uz-icon{font-size:22px;color:var(--text3);margin-bottom:8px}
+.uz-text{font-size:12px;color:var(--text2);letter-spacing:.08em}
+.uz-text b{color:var(--text)}
+.uz-sub{font-size:10px;color:var(--text3);margin-top:5px}
+.upload-progress{margin-bottom:16px;display:none}
+.progress-bar{height:2px;background:var(--border2);position:relative;overflow:hidden}
+.progress-fill{position:absolute;left:0;top:0;height:100%;background:var(--text);width:0%;transition:width .2s}
+.progress-label{font-size:10px;color:var(--text2);margin-top:6px;letter-spacing:.06em}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;border:1px solid var(--border);background:var(--border);margin-bottom:22px}
+.stat{background:var(--surface);padding:14px}
+.stat-l{font-size:9px;letter-spacing:.18em;color:var(--text2);text-transform:uppercase;margin-bottom:5px}
+.stat-v{font-size:18px;color:var(--bright);letter-spacing:.05em}
+.stat-s{font-size:9px;color:var(--text3);margin-top:3px}
+
+/* File table */
+.file-tbl{width:100%;border-collapse:collapse}
+.file-tbl th{font-size:9px;letter-spacing:.15em;color:var(--text2);text-transform:uppercase;text-align:left;padding:6px 9px;border-bottom:1px solid var(--border);font-weight:400}
+.file-tbl td{padding:8px 9px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:middle}
+.file-tbl tr:hover td{background:rgba(255,255,255,.015)}
+.file-tbl tr:last-child td{border-bottom:none}
+.fname{color:var(--bright);cursor:pointer}
+.fname:hover{color:var(--linkh);text-decoration:underline}
+.fext{display:inline-block;font-size:9px;letter-spacing:.1em;padding:1px 4px;border:1px solid var(--border2);color:var(--text2);margin-right:5px;text-transform:uppercase}
+.dim{color:var(--text2);font-size:11px}
+.file-acts{display:flex;gap:6px;justify-content:flex-end}
+.file-acts button{background:none;border:1px solid var(--border);color:var(--text2);font-family:var(--mono);font-size:9px;letter-spacing:.1em;padding:3px 8px;cursor:pointer;text-transform:uppercase;transition:all .1s}
+.file-acts button:hover{border-color:var(--border2);color:var(--text)}
+.file-acts button.del:hover{border-color:var(--danger);color:#cc7777}
+.empty-state{text-align:center;padding:40px;color:var(--text3);font-size:11px;letter-spacing:.12em}
+.pagination{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:10px;color:var(--text2);letter-spacing:.08em}
+
+/* Settings */
+.settings-group{border:1px solid var(--border);margin-bottom:16px}
+.sg-header{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.sg-title{font-size:9px;letter-spacing:.18em;color:var(--text2);text-transform:uppercase}
+.sg-body{padding:16px;display:flex;flex-direction:column;gap:12px}
+.sg-row{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--text)}
+.sg-label{width:120px;color:var(--text2);font-size:10px;letter-spacing:.08em;flex-shrink:0}
+.code-pill{background:var(--bg);border:1px solid var(--border2);padding:6px 10px;font-size:11px;color:var(--bright);letter-spacing:.06em;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qr-wrap{display:none;margin-top:12px}
+.qr-wrap img{width:160px;height:160px;border:1px solid var(--border2)}
+.qr-instructions{font-size:10px;color:var(--text2);margin-top:8px;letter-spacing:.06em;line-height:1.6}
+.totp-input-row{display:flex;gap:8px;margin-top:8px}
+.totp-input-row input{width:120px;text-align:center;letter-spacing:.2em;font-size:16px}
+
+/* Admin panel */
+.admin-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.admin-tbl th{font-size:9px;letter-spacing:.15em;color:var(--text2);text-transform:uppercase;text-align:left;padding:6px 9px;border-bottom:1px solid var(--border);font-weight:400}
+.admin-tbl td{padding:7px 9px;border-bottom:1px solid var(--border);vertical-align:middle}
+.admin-tbl tr:last-child td{border-bottom:none}
+.role-badge{font-size:9px;padding:1px 6px;border:1px solid;text-transform:uppercase;letter-spacing:.1em}
+.role-badge.admin{border-color:#555577;color:#9999bb}
+.role-badge.user{border-color:var(--border2);color:var(--text2)}
+.invite-code{font-size:11px;color:var(--bright);letter-spacing:.1em;background:var(--bg);border:1px solid var(--border);padding:3px 8px;display:inline-block}
+.invite-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+</style>
+</head>
+<body>
+
+<!-- TOAST CONTAINER -->
+<div id="toast-container"></div>
+
+<!-- ══════════════════════════════ LOGIN PAGE ══════════════════════════════ -->
+<div id="page-login" class="page active">
+  <div class="login-wrap">
+    <div class="logo-diamonds">
+      <div class="d fill"></div><div class="d"></div><div class="d fill"></div><div class="d"></div><div class="d fill"></div>
+    </div>
+    <div class="logo-text">clinqies</div>
+    <div class="logo-diamonds">
+      <div class="d fill"></div><div class="d"></div><div class="d fill"></div><div class="d"></div><div class="d fill"></div>
+    </div>
+    <div class="logo-tag">~secure file sharing~</div>
+
+    <!-- Login form -->
+    <div id="login-form" class="login-box">
+      <div>
+        <div class="field-label">username</div>
+        <input type="text" id="l-user" autocomplete="username" spellcheck="false">
+      </div>
+      <div>
+        <div class="field-row">
+          <div class="field-label" style="flex:1">password</div>
+          <div class="pw-toggle">
+            <span id="pw-text" onclick="togglePw('text')">text</span>
+            <span id="pw-hide" class="on" onclick="togglePw('hide')">hide</span>
+          </div>
+        </div>
+        <input type="password" id="l-pass" autocomplete="current-password">
+      </div>
+      <div id="totp-field" class="hidden">
+        <div class="field-label">authenticator code</div>
+        <input type="text" id="l-totp" maxlength="6" placeholder="______" style="text-align:center;letter-spacing:.2em">
+      </div>
+      <div class="err" id="l-err"></div>
+      <button class="btn btn-full" onclick="doLogin()">&#9632; login</button>
+      <div class="divider">or</div>
+      <button class="btn btn-full" onclick="toast('passkey auth coming soon','info')" style="gap:6px">&#128274; use passkey / fingerprint</button>
+      <div class="login-links">
+        <a onclick="showPage('forgot')">forgot password</a>
+        <a onclick="showRegister()">create account</a>
+      </div>
+    </div>
+
+    <!-- Register form -->
+    <div id="register-form" class="login-box hidden">
+      <div>
+        <div class="field-label">invite code</div>
+        <input type="text" id="r-invite" placeholder="xxxxxxxxxxxxxxxx" spellcheck="false" style="letter-spacing:.1em">
+      </div>
+      <div>
+        <div class="field-label">username</div>
+        <input type="text" id="r-user" autocomplete="username" spellcheck="false">
+      </div>
+      <div>
+        <div class="field-label">email</div>
+        <input type="email" id="r-email" autocomplete="email">
+      </div>
+      <div>
+        <div class="field-label">password <span style="color:var(--text3);font-size:9px">(min 10 chars)</span></div>
+        <input type="password" id="r-pass" autocomplete="new-password">
+      </div>
+      <div class="err" id="r-err"></div>
+      <button class="btn btn-full" onclick="doRegister()">&#9632; create account</button>
+      <div class="login-links">
+        <a onclick="showLogin()">&#8592; back to login</a>
+      </div>
+    </div>
+
+    <div class="footer-nav">
+      <a href="#">terms of service</a>
+      <a href="#">octave policy</a>
+      <a href="https://github.com" target="_blank">github</a>
+      <a href="#">url shortener</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════ DASHBOARD PAGE ══════════════════════════════ -->
+<div id="page-dashboard" class="page">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="topbar-logo">clinqies<em>~secure file sharing~</em></div>
+    <div class="topbar-right">
+      <div class="topbar-user">logged in as <b id="tb-username">—</b></div>
+      <div class="topbar-nav">
+        <a onclick="showSection('files')">files</a>
+        <a onclick="showSection('settings')">settings</a>
+        <a id="admin-link" class="hidden" onclick="showSection('admin')">admin</a>
+        <a onclick="doLogout()">logout</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="dash-body">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="sb-section">navigate</div>
+      <div class="sb-item active" onclick="showSection('upload')" id="sb-upload">
+        <span class="sb-icon">&#8679;</span> upload
+      </div>
+      <div class="sb-item" onclick="showSection('files')" id="sb-files">
+        <span class="sb-icon">&#9776;</span> my files
+      </div>
+      <div class="sb-item" onclick="showSection('settings')" id="sb-settings">
+        <span class="sb-icon">&#9881;</span> settings
+      </div>
+      <div class="sb-item hidden" onclick="showSection('admin')" id="sb-admin">
+        <span class="sb-icon">&#9760;</span> admin
+      </div>
+
+      <div class="sb-quota">
+        <div style="display:flex;justify-content:space-between">
+          <span>your storage</span>
+        </div>
+        <div class="quota-bar"><div class="quota-fill" id="quota-fill" style="width:0%"></div></div>
+        <div class="quota-nums">
+          <span id="quota-used">0 B</span>
+          <span id="quota-total">—</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+      <!-- UPLOAD SECTION -->
+      <div class="section active" id="sec-upload">
+        <div class="sec-title">upload file</div>
+
+        <div class="stats-grid">
+          <div class="stat"><div class="stat-l">files</div><div class="stat-v" id="s-files">—</div></div>
+          <div class="stat"><div class="stat-l">total size</div><div class="stat-v" id="s-size">—</div></div>
+          <div class="stat"><div class="stat-l">total views</div><div class="stat-v" id="s-views">—</div></div>
+          <div class="stat"><div class="stat-l">server used</div><div class="stat-v" id="s-server">—</div></div>
+        </div>
+
+        <div class="upload-zone" id="upload-zone">
+          <input type="file" id="file-input" onchange="handleFileSelect(this.files)">
+          <div class="uz-icon">&#8679;</div>
+          <div class="uz-text"><b>click to select</b> or drag and drop</div>
+          <div class="uz-sub">max 50mb · images · video · audio · archives · text</div>
+        </div>
+
+        <div class="upload-progress" id="upload-progress">
+          <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+          <div class="progress-label" id="progress-label">uploading...</div>
+        </div>
+
+        <div id="upload-result" class="hidden" style="border:1px solid var(--border);padding:16px;margin-bottom:16px">
+          <div class="sec-title" style="margin-bottom:10px">uploaded</div>
+          <div class="sg-row">
+            <span class="sg-label">url</span>
+            <span class="code-pill" id="ur-url"></span>
+            <button class="btn btn-sm" onclick="copyText(document.getElementById('ur-url').textContent)">copy</button>
+          </div>
+        </div>
+
+        <!-- Recent uploads -->
+        <div class="sec-title" style="margin-top:8px">recent uploads</div>
+        <table class="file-tbl" id="recent-tbl">
+          <thead><tr>
+            <th>file</th><th>size</th><th>views</th><th>date</th><th></th>
+          </tr></thead>
+          <tbody id="recent-tbody"></tbody>
+        </table>
+      </div>
+
+      <!-- FILES SECTION -->
+      <div class="section" id="sec-files">
+        <div class="sec-title">
+          my files
+          <div class="sec-title-actions">
+            <select id="sort-select" onchange="loadFiles()" style="background:var(--bg);border:1px solid var(--border2);color:var(--text2);font-size:9px;padding:3px 6px;letter-spacing:.08em">
+              <option value="created_at:desc">newest first</option>
+              <option value="created_at:asc">oldest first</option>
+              <option value="size:desc">largest first</option>
+              <option value="views:desc">most viewed</option>
+            </select>
+          </div>
+        </div>
+        <table class="file-tbl">
+          <thead><tr>
+            <th>file</th><th>size</th><th>type</th><th>views</th><th>uploaded</th><th></th>
+          </tr></thead>
+          <tbody id="files-tbody"></tbody>
+        </table>
+        <div class="empty-state hidden" id="files-empty">no files uploaded yet</div>
+        <div class="pagination" id="pagination"></div>
+      </div>
+
+      <!-- SETTINGS SECTION -->
+      <div class="section" id="sec-settings">
+        <div class="sec-title">settings</div>
+
+        <!-- API / ShareX -->
+        <div class="settings-group">
+          <div class="sg-header"><span class="sg-title">sharex / api</span></div>
+          <div class="sg-body">
+            <div class="sg-row">
+              <span class="sg-label">api key</span>
+              <span class="code-pill" id="api-key-display">—</span>
+              <button class="btn btn-sm" onclick="copyText(document.getElementById('api-key-display').textContent)">copy</button>
+            </div>
+            <div class="sg-row">
+              <span class="sg-label">download config</span>
+              <button class="btn btn-sm" onclick="downloadShareXConfig()">&#8681; sharex .sxcu</button>
+              <button class="btn btn-sm" onclick="downloadShellScript()">&#8681; shell script</button>
+            </div>
+            <div class="sg-row">
+              <span class="sg-label">regen key</span>
+              <button class="btn btn-sm btn-danger" onclick="regenApiKey()">regenerate api key</button>
+              <span style="color:var(--text3);font-size:10px">invalidates all existing integrations</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2FA -->
+        <div class="settings-group">
+          <div class="sg-header">
+            <span class="sg-title">two-factor authentication</span>
+            <span id="totp-status" style="font-size:9px;color:var(--text2)">disabled</span>
+          </div>
+          <div class="sg-body" id="totp-section">
+            <div id="totp-enable-flow">
+              <button class="btn btn-sm" onclick="setup2FA()">enable totp 2fa</button>
+              <div class="qr-wrap" id="qr-wrap">
+                <img id="qr-img" src="" alt="QR code">
+                <div class="qr-instructions">
+                  scan with google authenticator, authy, or any totp app.<br>
+                  then enter the 6-digit code below to confirm.
+                </div>
+                <div class="totp-input-row">
+                  <input type="text" id="totp-confirm-input" maxlength="6" placeholder="000000">
+                  <button class="btn btn-sm" onclick="confirm2FA()">confirm &amp; enable</button>
+                </div>
+              </div>
+            </div>
+            <div id="totp-disable-flow" class="hidden">
+              <div style="font-size:11px;color:var(--text2);margin-bottom:8px">2fa is enabled. enter your password to disable it.</div>
+              <div style="display:flex;gap:8px">
+                <input type="password" id="totp-disable-pass" placeholder="password" style="width:180px">
+                <button class="btn btn-sm btn-danger" onclick="disable2FA()">disable 2fa</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Account info -->
+        <div class="settings-group">
+          <div class="sg-header"><span class="sg-title">account</span></div>
+          <div class="sg-body">
+            <div class="sg-row"><span class="sg-label">username</span><span id="set-username" style="color:var(--bright)">—</span></div>
+            <div class="sg-row"><span class="sg-label">email</span><span id="set-email" style="color:var(--bright)">—</span></div>
+            <div class="sg-row"><span class="sg-label">role</span><span id="set-role" style="color:var(--bright)">—</span></div>
+            <div class="sg-row"><span class="sg-label">joined</span><span id="set-joined" style="color:var(--text2)">—</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ADMIN SECTION -->
+      <div class="section" id="sec-admin">
+        <div class="sec-title">
+          admin panel
+          <div class="sec-title-actions">
+            <button class="btn btn-sm" onclick="showInviteModal()">+ generate invites</button>
+          </div>
+        </div>
+
+        <!-- Server stats -->
+        <div class="stats-grid" style="margin-bottom:22px">
+          <div class="stat"><div class="stat-l">users</div><div class="stat-v" id="a-users">—</div></div>
+          <div class="stat"><div class="stat-l">files</div><div class="stat-v" id="a-files">—</div></div>
+          <div class="stat"><div class="stat-l">server size</div><div class="stat-v" id="a-size">—</div></div>
+          <div class="stat"><div class="stat-l">open invites</div><div class="stat-v" id="a-invites">—</div></div>
+        </div>
+
+        <!-- Users table -->
+        <div class="sec-title">users</div>
+        <table class="admin-tbl" style="margin-bottom:22px">
+          <thead><tr>
+            <th>username</th><th>email</th><th>role</th><th>files</th><th>storage</th><th>last seen</th><th></th>
+          </tr></thead>
+          <tbody id="admin-users-tbody"></tbody>
+        </table>
+
+        <!-- Invites -->
+        <div class="sec-title">active invites</div>
+        <div class="invite-grid" id="invite-grid"></div>
+        <div class="empty-state hidden" id="invite-empty">no pending invites</div>
+
+        <!-- Invite generator inline -->
+        <div id="invite-gen" style="margin-top:16px;border:1px solid var(--border);padding:16px">
+          <div class="field-label" style="margin-bottom:8px">generate invite codes</div>
+          <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+            <div>
+              <div class="field-label">count</div>
+              <input type="number" id="inv-count" value="1" min="1" max="50" style="width:70px">
+            </div>
+            <div>
+              <div class="field-label">expires in (days, blank=never)</div>
+              <input type="number" id="inv-expires" placeholder="never" style="width:100px">
+            </div>
+            <button class="btn btn-sm" onclick="generateInvites()" style="margin-top:14px">generate</button>
+          </div>
+          <div class="invite-grid" id="new-invite-grid" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+    </div><!-- /content -->
+  </div><!-- /dash-body -->
+</div><!-- /page-dashboard -->
+
+<script>
+// ── STATE ──
+let currentUser = null;
+let currentPage = 1;
+let currentSort = 'created_at';
+let currentOrder = 'desc';
+
+// ── TOAST ──
+function toast(msg, type = 'info') {
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  document.getElementById('toast-container').appendChild(el);
+  requestAnimationFrame(() => el.classList.add('show'));
+  setTimeout(() => {
+    el.classList.remove('show');
+    setTimeout(() => el.remove(), 300);
+  }, 3000);
+}
+
+// ── PAGE / SECTION HELPERS ──
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+}
+
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
+  const sec = document.getElementById('sec-' + id);
+  if (sec) sec.classList.add('active');
+  const sb = document.getElementById('sb-' + id);
+  if (sb) sb.classList.add('active');
+  if (id === 'files') { currentPage = 1; loadFiles(); }
+  if (id === 'admin') loadAdmin();
+}
+
+function showLogin() {
+  document.getElementById('login-form').classList.remove('hidden');
+  document.getElementById('register-form').classList.add('hidden');
+}
+function showRegister() {
+  document.getElementById('login-form').classList.add('hidden');
+  document.getElementById('register-form').classList.remove('hidden');
+}
+
+// ── PASSWORD TOGGLE ──
+function togglePw(mode) {
+  const inp = document.getElementById('l-pass');
+  inp.type = mode === 'text' ? 'text' : 'password';
+  document.getElementById('pw-text').classList.toggle('on', mode === 'text');
+  document.getElementById('pw-hide').classList.toggle('on', mode === 'hide');
+}
+
+// ── API ──
+async function api(method, path, body, isForm = false) {
+  const opts = { method, credentials: 'include', headers: {} };
+  if (body && !isForm) {
+    opts.headers['Content-Type'] = 'application/json';
+    opts.body = JSON.stringify(body);
+  } else if (body && isForm) {
+    opts.body = body;
+  }
+  const r = await fetch('/api' + path, opts);
+  const data = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error(data.error || 'request failed');
+  return data;
+}
+
+// ── LOGIN ──
+async function doLogin() {
+  const username = document.getElementById('l-user').value.trim();
+  const password = document.getElementById('l-pass').value;
+  const totp = document.getElementById('l-totp').value.trim();
+  document.getElementById('l-err').textContent = '';
+
+  try {
+    const res = await api('POST', '/auth/login', { username, password, totp: totp || undefined });
+    if (res.requires2fa) {
+      document.getElementById('totp-field').classList.remove('hidden');
+      document.getElementById('l-err').textContent = 'enter your authenticator code';
+      return;
+    }
+    currentUser = res.user;
+    initDashboard();
+    showPage('dashboard');
+  } catch (e) {
+    document.getElementById('l-err').textContent = e.message;
+  }
+}
+
+// ── REGISTER ──
+async function doRegister() {
+  const invite = document.getElementById('r-invite').value.trim();
+  const username = document.getElementById('r-user').value.trim();
+  const email = document.getElementById('r-email').value.trim();
+  const password = document.getElementById('r-pass').value;
+  document.getElementById('r-err').textContent = '';
+
+  try {
+    await api('POST', '/auth/register', { invite, username, email, password });
+    toast('account created! please log in', 'success');
+    showLogin();
+  } catch (e) {
+    document.getElementById('r-err').textContent = e.message;
+  }
+}
+
+// ── LOGOUT ──
+async function doLogout() {
+  try { await api('POST', '/auth/logout'); } catch (e) {}
+  currentUser = null;
+  showPage('login');
+}
+
+// ── INIT DASHBOARD ──
+function initDashboard() {
+  const u = currentUser;
+  document.getElementById('tb-username').textContent = u.username;
+  document.getElementById('api-key-display').textContent = u.api_key;
+  document.getElementById('set-username').textContent = u.username;
+  document.getElementById('set-email').textContent = u.email;
+  document.getElementById('set-role').textContent = u.role;
+  document.getElementById('set-joined').textContent = fmtDate(u.created_at);
+
+  // 2FA status
+  if (u.totp_enabled) {
+    document.getElementById('totp-status').textContent = 'enabled';
+    document.getElementById('totp-status').style.color = '#88bb88';
+    document.getElementById('totp-enable-flow').classList.add('hidden');
+    document.getElementById('totp-disable-flow').classList.remove('hidden');
+  }
+
+  // Admin link
+  if (u.role === 'admin') {
+    document.getElementById('admin-link').classList.remove('hidden');
+    document.getElementById('sb-admin').classList.remove('hidden');
+  }
+
+  loadStats();
+  loadRecentFiles();
+}
+
+// ── STATS ──
+async function loadStats() {
+  try {
+    const s = await api('GET', '/files/stats');
+    document.getElementById('s-files').textContent = s.file_count;
+    document.getElementById('s-size').textContent = fmtSize(s.total_size);
+    document.getElementById('s-views').textContent = s.total_views;
+    document.getElementById('s-server').textContent = fmtSize(s.global_used);
+
+    // Quota bar (user storage vs 1TB global)
+    const pct = Math.min(100, (s.global_used / s.global_quota) * 100);
+    document.getElementById('quota-fill').style.width = pct.toFixed(1) + '%';
+    document.getElementById('quota-used').textContent = fmtSize(s.global_used);
+    document.getElementById('quota-total').textContent = '1 TB';
+  } catch (e) {}
+}
+
+// ── UPLOAD ──
+const dropZone = null;
+document.addEventListener('DOMContentLoaded', () => {
+  const zone = document.getElementById('upload-zone');
+  zone.addEventListener('dragover', e => { e.preventDefault(); zone.classList.add('over'); });
+  zone.addEventListener('dragleave', () => zone.classList.remove('over'));
+  zone.addEventListener('drop', e => {
+    e.preventDefault();
+    zone.classList.remove('over');
+    handleFileSelect(e.dataTransfer.files);
+  });
+
+  // Enter key on login
+  document.getElementById('l-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+  document.getElementById('l-user').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+
+  // Check existing session
+  api('GET', '/auth/me').then(user => {
+    currentUser = user;
+    initDashboard();
+    showPage('dashboard');
+  }).catch(() => {});
+});
+
+function handleFileSelect(files) {
+  if (!files || !files[0]) return;
+  uploadFile(files[0]);
+}
+
+async function uploadFile(file) {
+  if (file.size > 50 * 1024 * 1024) { toast('file exceeds 50MB limit', 'error'); return; }
+
+  const prog = document.getElementById('upload-progress');
+  const fill = document.getElementById('progress-fill');
+  const label = document.getElementById('progress-label');
+  const result = document.getElementById('upload-result');
+
+  prog.style.display = 'block';
+  result.classList.add('hidden');
+  fill.style.width = '0%';
+  label.textContent = 'uploading ' + file.name + '...';
+
+  const form = new FormData();
+  form.append('file', file);
+
+  try {
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', '/api/upload');
+    xhr.withCredentials = true;
+    xhr.upload.onprogress = e => {
+      if (e.lengthComputable) {
+        const pct = (e.loaded / e.total * 100).toFixed(0);
+        fill.style.width = pct + '%';
+        label.textContent = `uploading... ${pct}%`;
+      }
+    };
+    xhr.onload = () => {
+      prog.style.display = 'none';
+      const data = JSON.parse(xhr.responseText);
+      if (data.url) {
+        document.getElementById('ur-url').textContent = data.url;
+        result.classList.remove('hidden');
+        copyText(data.url);
+        toast('uploaded! url copied to clipboard', 'success');
+        loadStats();
+        loadRecentFiles();
+      } else {
+        toast(data.error || 'upload failed', 'error');
+      }
+    };
+    xhr.onerror = () => { prog.style.display = 'none'; toast('upload failed', 'error'); };
+    xhr.send(form);
+  } catch (e) {
+    prog.style.display = 'none';
+    toast(e.message, 'error');
+  }
+}
+
+// ── FILES ──
+async function loadRecentFiles() {
+  try {
+    const res = await api('GET', '/files?limit=5&sort=created_at&order=desc');
+    renderFileTable('recent-tbody', res.files, true);
+  } catch (e) {}
+}
+
+async function loadFiles() {
+  const sort = document.getElementById('sort-select').value;
+  const [s, o] = sort.split(':');
+  try {
+    const res = await api('GET', `/files?page=${currentPage}&limit=30&sort=${s}&order=${o}`);
+    renderFileTable('files-tbody', res.files, false);
+    const empty = document.getElementById('files-empty');
+    empty.classList.toggle('hidden', res.files.length > 0);
+    renderPagination(res.total, res.page, res.limit);
+  } catch (e) {}
+}
+
+function renderFileTable(tbodyId, files, compact) {
+  const tbody = document.getElementById(tbodyId);
+  if (!files || !files.length) { tbody.innerHTML = `<tr><td colspan="6" class="empty-state">no files</td></tr>`; return; }
+  tbody.innerHTML = files.map(f => {
+    const ext = f.filename.split('.').pop().toUpperCase();
+    return `<tr>
+      <td><span class="fext">${ext}</span><span class="fname" onclick="openFile('${f.url}')">${esc(f.original_name)}</span></td>
+      <td class="dim">${fmtSize(f.size)}</td>
+      ${!compact ? `<td class="dim">${f.mime_type.split('/')[0]}</td>` : ''}
+      <td class="dim">${f.views}</td>
+      <td class="dim">${fmtDate(f.created_at)}</td>
+      <td><div class="file-acts">
+        <button onclick="copyText('${f.url}')">copy</button>
+        <button onclick="openFile('${f.url}')">view</button>
+        <button class="del" onclick="deleteFile(${f.id}, this)">delete</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function renderPagination(total, page, limit) {
+  const pages = Math.ceil(total / limit);
+  const el = document.getElementById('pagination');
+  if (pages <= 1) { el.innerHTML = ''; return; }
+  el.innerHTML = `
+    <button class="btn btn-sm" onclick="changePage(${page - 1})" ${page <= 1 ? 'disabled' : ''}>&larr;</button>
+    <span>page ${page} / ${pages} &nbsp;·&nbsp; ${total} files</span>
+    <button class="btn btn-sm" onclick="changePage(${page + 1})" ${page >= pages ? 'disabled' : ''}>&rarr;</button>
+  `;
+}
+
+function changePage(p) { currentPage = p; loadFiles(); }
+
+async function deleteFile(id, btn) {
+  if (!confirm('delete this file permanently?')) return;
+  try {
+    await api('DELETE', `/files/${id}`);
+    btn.closest('tr').remove();
+    toast('file deleted', 'success');
+    loadStats();
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+function openFile(url) { window.open(url, '_blank'); }
+
+// ── SHAREX CONFIG ──
+function downloadShareXConfig() {
+  window.location.href = '/api/config/sharex';
+}
+function downloadShellScript() {
+  window.location.href = '/api/config/flameshot';
+}
+
+async function regenApiKey() {
+  const pw = prompt('enter your password to regenerate the api key:');
+  if (!pw) return;
+  try {
+    const res = await api('POST', '/auth/apikey/regen', { password: pw });
+    document.getElementById('api-key-display').textContent = res.api_key;
+    currentUser.api_key = res.api_key;
+    toast('api key regenerated', 'success');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+// ── 2FA ──
+async function setup2FA() {
+  try {
+    const res = await api('POST', '/auth/2fa/setup');
+    document.getElementById('qr-img').src = res.qr;
+    document.getElementById('qr-wrap').style.display = 'block';
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+async function confirm2FA() {
+  const token = document.getElementById('totp-confirm-input').value.trim();
+  try {
+    await api('POST', '/auth/2fa/confirm', { token });
+    toast('2fa enabled successfully', 'success');
+    document.getElementById('totp-status').textContent = 'enabled';
+    document.getElementById('totp-status').style.color = '#88bb88';
+    document.getElementById('totp-enable-flow').classList.add('hidden');
+    document.getElementById('totp-disable-flow').classList.remove('hidden');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+async function disable2FA() {
+  const password = document.getElementById('totp-disable-pass').value;
+  try {
+    await api('DELETE', '/auth/2fa', { password });
+    toast('2fa disabled', 'info');
+    document.getElementById('totp-status').textContent = 'disabled';
+    document.getElementById('totp-status').style.color = '';
+    document.getElementById('totp-enable-flow').classList.remove('hidden');
+    document.getElementById('totp-disable-flow').classList.add('hidden');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+// ── ADMIN ──
+async function loadAdmin() {
+  try {
+    const [stats, users, invites] = await Promise.all([
+      api('GET', '/admin/stats'),
+      api('GET', '/admin/users'),
+      api('GET', '/admin/invites')
+    ]);
+
+    document.getElementById('a-users').textContent = stats.user_count;
+    document.getElementById('a-files').textContent = stats.file_count;
+    document.getElementById('a-size').textContent = fmtSize(stats.total_size);
+    document.getElementById('a-invites').textContent = stats.pending_invites;
+
+    // Users table
+    document.getElementById('admin-users-tbody').innerHTML = users.users.map(u => `
+      <tr>
+        <td style="color:var(--bright)">${esc(u.username)}</td>
+        <td class="dim">${esc(u.email)}</td>
+        <td><span class="role-badge ${u.role}">${u.role}</span></td>
+        <td class="dim">${u.file_count}</td>
+        <td class="dim">${fmtSize(u.storage_used)}</td>
+        <td class="dim">${u.last_seen ? fmtDate(u.last_seen) : 'never'}</td>
+        <td><div class="file-acts">
+          <button onclick="toggleRole(${u.id},'${u.role === 'admin' ? 'user' : 'admin'}')">${u.role === 'admin' ? 'demote' : 'promote'}</button>
+          <button class="del" onclick="deleteUser(${u.id})">delete</button>
+        </div></td>
+      </tr>
+    `).join('');
+
+    // Invites
+    const pending = invites.invites.filter(i => !i.used_by);
+    const grid = document.getElementById('invite-grid');
+    const empty = document.getElementById('invite-empty');
+    empty.classList.toggle('hidden', pending.length > 0);
+    grid.innerHTML = pending.map(i => `
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="invite-code">${i.code}</span>
+        <button class="btn btn-sm" onclick="copyText('${i.code}')">copy</button>
+        <button class="btn btn-sm btn-danger" onclick="revokeInvite(${i.id})">revoke</button>
+      </div>
+    `).join('');
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+async function generateInvites() {
+  const count = document.getElementById('inv-count').value;
+  const days = document.getElementById('inv-expires').value;
+  try {
+    const res = await api('POST', '/admin/invites', { count: parseInt(count), expires_in_days: days || undefined });
+    const grid = document.getElementById('new-invite-grid');
+    grid.innerHTML = res.codes.map(c => `
+      <div style="display:flex;align-items:center;gap:6px">
+        <span class="invite-code">${c}</span>
+        <button class="btn btn-sm" onclick="copyText('${c}')">copy</button>
+      </div>
+    `).join('');
+    toast(`generated ${res.codes.length} invite(s)`, 'success');
+    loadAdmin();
+  } catch (e) { toast(e.message, 'error'); }
+}
+
+async function revokeInvite(id) {
+  try { await api('DELETE', `/admin/invites/${id}`); loadAdmin(); toast('invite revoked', 'info'); }
+  catch (e) { toast(e.message, 'error'); }
+}
+
+async function toggleRole(id, newRole) {
+  try { await api('PATCH', `/admin/users/${id}/role`, { role: newRole }); loadAdmin(); toast('role updated', 'success'); }
+  catch (e) { toast(e.message, 'error'); }
+}
+
+async function deleteUser(id) {
+  if (!confirm('delete this user and all their files?')) return;
+  try { await api('DELETE', `/admin/users/${id}`); loadAdmin(); toast('user deleted', 'success'); }
+  catch (e) { toast(e.message, 'error'); }
+}
+
+// ── UTILS ──
+function copyText(text) {
+  navigator.clipboard.writeText(text).then(() => toast('copied to clipboard', 'info')).catch(() => {
+    const el = document.createElement('textarea');
+    el.value = text; document.body.appendChild(el); el.select();
+    document.execCommand('copy'); el.remove(); toast('copied', 'info');
+  });
+}
+
+function fmtSize(bytes) {
+  if (!bytes) return '0 B';
+  const units = ['B','KB','MB','GB','TB'];
+  let i = 0, n = bytes;
+  while (n >= 1024 && i < units.length - 1) { n /= 1024; i++; }
+  return n.toFixed(i === 0 ? 0 : 1) + ' ' + units[i];
+}
+
+function fmtDate(ts) {
+  if (!ts) return '—';
+  return new Date(ts * 1000).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: '2-digit' });
+}
+
+function esc(s) {
+  return String(s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+</script>
+</body>
+</html>
