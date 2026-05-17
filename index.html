@@ -12,54 +12,50 @@
   --border:#1f1f1f;--border2:#2a2a2a;
   --red:#cc1b1b;--red2:#a81515;--red3:#e02020;
   --text:#c8c8c8;--text2:#666;--text3:#3a3a3a;
-  --bright:#f0f0f0;--white:#ffffff;
+  --bright:#f0f0f0;--white:#fff;
   --serif:'Playfair Display',Georgia,serif;
   --mono:'Share Tech Mono','Courier New',monospace;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;min-height:100vh;letter-spacing:.03em}
-a{color:var(--red);text-decoration:none}a:hover{color:var(--red3)}
-input,button,select{font-family:var(--mono);font-size:13px;outline:none}
+input,button,select,textarea{font-family:var(--mono);font-size:13px;outline:none}
 button{cursor:pointer}
 .hidden{display:none!important}
 
+/* TOAST */
 #toast-container{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
-.toast{background:var(--surface2);border-left:3px solid var(--red);padding:10px 16px;font-size:11px;letter-spacing:.08em;opacity:0;transform:translateX(20px);transition:all .2s;max-width:280px}
+.toast{background:var(--surface2);border-left:3px solid var(--red);padding:10px 16px;font-size:11px;letter-spacing:.08em;opacity:0;transform:translateX(20px);transition:all .2s;max-width:300px}
 .toast.show{opacity:1;transform:translateX(0)}
 .toast.success{border-color:#883333;color:#dd8888}
 .toast.error{border-color:#660000;color:#ff6666}
 .toast.info{border-color:var(--red);color:var(--text)}
 
+/* PAGES */
 .page{display:none;min-height:100vh}
 .page.active{display:flex;flex-direction:column}
 
-/* ── LOGIN ── */
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:flex;align-items:center;justify-content:center}
+.modal{background:var(--surface);border:1px solid var(--border2);border-top:3px solid var(--red);padding:24px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto}
+.modal-title{font-size:11px;letter-spacing:.2em;color:var(--text2);text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
+.modal-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
+
+/* LOGIN */
 #page-login{align-items:center;justify-content:center;background:var(--bg);position:relative;overflow:hidden}
-#page-login::before{
-  content:'';position:absolute;top:0;left:0;right:0;height:44vh;
-  background:var(--red2);
-  clip-path:polygon(0 0,100% 0,100% 58%,50% 100%,0 58%);
-  z-index:0;
-}
-#page-login::after{
-  content:'';position:absolute;top:0;left:0;right:0;height:44vh;
-  background:linear-gradient(160deg,var(--red) 0%,var(--red2) 100%);
-  clip-path:polygon(0 0,100% 0,100% 52%,50% 94%,0 52%);
-  z-index:0;
-}
+#page-login::before{content:'';position:absolute;top:0;left:0;right:0;height:44vh;background:var(--red2);clip-path:polygon(0 0,100% 0,100% 58%,50% 100%,0 58%);z-index:0}
+#page-login::after{content:'';position:absolute;top:0;left:0;right:0;height:44vh;background:linear-gradient(160deg,var(--red) 0%,var(--red2) 100%);clip-path:polygon(0 0,100% 0,100% 52%,50% 94%,0 52%);z-index:0}
 .login-wrap{width:100%;max-width:340px;display:flex;flex-direction:column;align-items:center;position:relative;z-index:1;padding:2rem 0 3rem}
 .logo-area{display:flex;flex-direction:column;align-items:center;margin-bottom:26px}
 .logo-text{font-family:var(--serif);font-size:54px;font-weight:900;color:var(--white);letter-spacing:.04em;text-transform:uppercase;line-height:1;text-shadow:0 2px 20px rgba(0,0,0,.5)}
 .logo-rule{width:70px;height:2px;background:rgba(255,255,255,.35);margin:9px 0}
-.logo-tag{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.24em;text-transform:uppercase;font-family:var(--mono)}
+.logo-tag{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.24em;text-transform:uppercase}
 .login-box{width:100%;background:var(--surface);border:1px solid var(--border2);border-top:3px solid var(--red);padding:24px;display:flex;flex-direction:column;gap:14px}
 .field-label{font-size:9px;letter-spacing:.22em;color:var(--text2);text-transform:uppercase;margin-bottom:4px}
 .field-row{display:flex;align-items:center;gap:6px}
 .pw-toggle{display:flex;font-size:9px;color:var(--text2)}
 .pw-toggle span{border:1px solid var(--border2);padding:2px 5px;cursor:pointer;transition:all .1s}
 .pw-toggle span.on{background:var(--red2);color:var(--white);border-color:var(--red2)}
-.pw-toggle span:hover{color:var(--text)}
-input[type=text],input[type=password],input[type=email]{width:100%;background:var(--bg);border:1px solid var(--border2);color:var(--bright);padding:8px 10px;transition:border-color .15s;letter-spacing:.04em}
-input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border-color:var(--red)}
+input[type=text],input[type=password],input[type=email],input[type=number]{width:100%;background:var(--bg);border:1px solid var(--border2);color:var(--bright);padding:8px 10px;transition:border-color .15s;letter-spacing:.04em}
+input[type=text]:focus,input[type=password]:focus,input[type=email]:focus,input[type=number]:focus{border-color:var(--red)}
 .btn{background:transparent;border:1px solid var(--text2);color:var(--text);font-family:var(--mono);font-size:10px;letter-spacing:.2em;padding:10px 16px;text-transform:uppercase;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
 .btn:hover{background:rgba(204,27,27,.08);border-color:var(--red);color:var(--bright)}
 .btn:active{opacity:.7}
@@ -69,6 +65,7 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
 .btn-sm{font-size:9px;padding:5px 10px;letter-spacing:.12em}
 .btn-danger{border-color:var(--red2);color:#cc6666}
 .btn-danger:hover{background:rgba(150,20,20,.15);border-color:var(--red);color:#ff8888}
+.btn:disabled{opacity:.4;cursor:not-allowed}
 .divider{text-align:center;font-size:10px;color:var(--text3);letter-spacing:.1em;position:relative}
 .divider::before,.divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border)}
 .divider::before{left:0}.divider::after{right:0}
@@ -76,18 +73,18 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
 .login-links a{color:var(--text2);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .login-links a:hover{color:var(--red)}
 .footer-nav{margin-top:22px;display:flex;gap:18px;font-size:10px;letter-spacing:.1em;color:var(--text3)}
-.footer-nav a{color:var(--text3);transition:color .1s}.footer-nav a:hover{color:var(--red)}
+.footer-nav a{color:var(--text3);transition:color .1s;cursor:pointer}.footer-nav a:hover{color:var(--red)}
 .err{font-size:11px;color:#cc4444;letter-spacing:.06em;text-align:center;min-height:15px}
 
-/* ── DASHBOARD ── */
+/* DASHBOARD */
 #page-dashboard{flex-direction:column}
 .topbar{border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:var(--surface);height:46px}
 .topbar-logo{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--white);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:10px}
 .topbar-logo::before{content:'';display:inline-block;width:4px;height:22px;background:var(--red)}
 .topbar-logo em{font-style:italic;font-family:var(--mono);font-size:10px;color:var(--text2);font-weight:400;letter-spacing:.12em}
-.topbar-right{display:flex;align-items:center;gap:20px;font-size:10px;letter-spacing:.08em}
+.topbar-right{display:flex;align-items:center;gap:20px;font-size:10px}
 .topbar-user{color:var(--text2)}.topbar-user b{color:var(--bright)}
-.topbar-nav a{color:var(--text2);font-size:9px;letter-spacing:.15em;text-transform:uppercase;margin-left:14px;transition:color .1s;padding:4px 0;border-bottom:1px solid transparent}
+.topbar-nav a{color:var(--text2);font-size:9px;letter-spacing:.15em;text-transform:uppercase;margin-left:14px;transition:color .1s;padding:4px 0;border-bottom:1px solid transparent;cursor:pointer}
 .topbar-nav a:hover{color:var(--red);border-bottom-color:var(--red)}
 .dash-body{flex:1;display:grid;grid-template-columns:200px 1fr}
 .sidebar{border-right:1px solid var(--border);padding:16px 0;display:flex;flex-direction:column;background:var(--surface)}
@@ -109,44 +106,75 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
 .stat{background:var(--surface);padding:14px 16px}
 .stat-l{font-size:9px;letter-spacing:.18em;color:var(--text2);text-transform:uppercase;margin-bottom:6px}
 .stat-v{font-size:20px;color:var(--bright);letter-spacing:.03em;font-family:var(--serif)}
-.upload-zone{border:1px dashed var(--border2);padding:40px 24px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:22px;position:relative}
-.upload-zone:hover,.upload-zone.over{border-color:var(--red);background:rgba(204,27,27,.03)}
+
+/* Upload */
+.upload-zone{border:1px dashed var(--border2);padding:36px 24px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:16px;position:relative}
+.upload-zone:hover,.upload-zone.over,.upload-zone.paste-ready{border-color:var(--red);background:rgba(204,27,27,.03)}
 .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.uz-icon{font-size:24px;color:var(--red);margin-bottom:10px;opacity:.7}
+.uz-icon{font-size:24px;color:var(--red);margin-bottom:8px;opacity:.7}
 .uz-text{font-size:12px;color:var(--text2);letter-spacing:.08em}
 .uz-text b{color:var(--bright)}
 .uz-sub{font-size:10px;color:var(--text3);margin-top:5px}
-.upload-progress{margin-bottom:16px;display:none}
-.progress-bar{height:2px;background:var(--border2);position:relative;overflow:hidden}
+.uz-paste-hint{font-size:10px;color:var(--text3);margin-top:4px;letter-spacing:.06em}
+
+.upload-options{display:flex;gap:12px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
+.upload-options label{font-size:10px;color:var(--text2);letter-spacing:.08em}
+.upload-options select,.upload-options input[type=number]{width:auto;padding:4px 8px;font-size:11px}
+
+.progress-bar{height:2px;background:var(--border2);position:relative;overflow:hidden;margin-bottom:4px}
 .progress-fill{position:absolute;left:0;top:0;height:100%;background:var(--red);width:0%;transition:width .2s}
-.progress-label{font-size:10px;color:var(--text2);margin-top:6px;letter-spacing:.06em}
+.progress-label{font-size:10px;color:var(--text2);letter-spacing:.06em}
+#upload-progress{margin-bottom:16px;display:none}
 #upload-result{border:1px solid var(--border);border-left:3px solid var(--red);padding:16px;margin-bottom:16px}
+
+/* Embed codes */
+.embed-tabs{display:flex;gap:0;margin-bottom:8px}
+.embed-tab{font-size:9px;letter-spacing:.1em;padding:4px 10px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;text-transform:uppercase;transition:all .1s}
+.embed-tab.active{background:var(--red2);border-color:var(--red2);color:var(--white)}
+.embed-code{background:var(--bg);border:1px solid var(--border2);padding:8px 10px;font-size:11px;color:var(--text);word-break:break-all;white-space:pre-wrap;letter-spacing:.02em;line-height:1.5}
+
+/* File table */
 .file-tbl{width:100%;border-collapse:collapse}
 .file-tbl th{font-size:9px;letter-spacing:.15em;color:var(--text2);text-transform:uppercase;text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);font-weight:400}
-.file-tbl td{padding:9px 10px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:middle}
+.file-tbl th.check-col{width:32px}
+.file-tbl td{padding:8px 10px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:middle}
 .file-tbl tr:hover td{background:rgba(204,27,27,.03)}
 .file-tbl tr:last-child td{border-bottom:none}
+.file-tbl tr.selected td{background:rgba(204,27,27,.06)}
 .fname{color:var(--bright);cursor:pointer}.fname:hover{color:var(--red)}
 .fext{display:inline-block;font-size:9px;letter-spacing:.1em;padding:1px 5px;border:1px solid var(--red2);color:var(--red);margin-right:6px;text-transform:uppercase}
 .dim{color:var(--text2);font-size:11px}
+.expiry-badge{font-size:9px;color:#cc8800;border:1px solid #554400;padding:1px 5px;margin-left:4px}
 .file-acts{display:flex;gap:6px;justify-content:flex-end}
 .file-acts button{background:none;border:1px solid var(--border);color:var(--text2);font-family:var(--mono);font-size:9px;letter-spacing:.1em;padding:3px 8px;cursor:pointer;text-transform:uppercase;transition:all .1s}
 .file-acts button:hover{border-color:var(--border2);color:var(--text)}
 .file-acts button.del:hover{border-color:var(--red);color:var(--red)}
 .empty-state{text-align:center;padding:40px;color:var(--text3);font-size:11px;letter-spacing:.12em}
 .pagination{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:10px;color:var(--text2)}
+.bulk-bar{display:none;align-items:center;gap:10px;padding:10px 12px;background:rgba(204,27,27,.08);border:1px solid var(--red2);margin-bottom:12px;font-size:11px;color:var(--text2)}
+.bulk-bar.show{display:flex}
+
+/* Settings */
 .settings-group{border:1px solid var(--border);border-top:2px solid var(--red);margin-bottom:16px}
 .sg-header{padding:10px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
 .sg-title{font-size:9px;letter-spacing:.18em;color:var(--text2);text-transform:uppercase}
 .sg-body{padding:16px;display:flex;flex-direction:column;gap:12px}
-.sg-row{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--text)}
+.sg-row{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--text);flex-wrap:wrap}
 .sg-label{width:120px;color:var(--text2);font-size:10px;letter-spacing:.08em;flex-shrink:0}
-.code-pill{background:var(--bg);border:1px solid var(--border2);padding:6px 10px;font-size:11px;color:var(--bright);letter-spacing:.06em;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.code-pill{background:var(--bg);border:1px solid var(--border2);padding:6px 10px;font-size:11px;color:var(--bright);letter-spacing:.06em;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .qr-wrap{display:none;margin-top:12px}
 .qr-wrap img{width:160px;height:160px;border:1px solid var(--border2)}
 .qr-instructions{font-size:10px;color:var(--text2);margin-top:8px;letter-spacing:.06em;line-height:1.6}
 .totp-input-row{display:flex;gap:8px;margin-top:8px}
-.totp-input-row input{width:120px;text-align:center;letter-spacing:.2em;font-size:16px}
+.totp-input-row input{width:130px;text-align:center;letter-spacing:.2em;font-size:16px}
+
+/* Shortener */
+.short-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.short-tbl th{font-size:9px;letter-spacing:.15em;color:var(--text2);text-transform:uppercase;text-align:left;padding:6px 9px;border-bottom:1px solid var(--border);font-weight:400}
+.short-tbl td{padding:7px 9px;border-bottom:1px solid var(--border);vertical-align:middle}
+.short-tbl tr:last-child td{border-bottom:none}
+
+/* Admin */
 .admin-tbl{width:100%;border-collapse:collapse;font-size:11px}
 .admin-tbl th{font-size:9px;letter-spacing:.15em;color:var(--text2);text-transform:uppercase;text-align:left;padding:6px 9px;border-bottom:1px solid var(--border);font-weight:400}
 .admin-tbl td{padding:7px 9px;border-bottom:1px solid var(--border);vertical-align:middle}
@@ -156,10 +184,17 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
 .role-badge.user{border-color:var(--border2);color:var(--text2)}
 .invite-code{font-size:11px;color:var(--bright);letter-spacing:.1em;background:var(--bg);border:1px solid var(--border);padding:3px 8px;display:inline-block}
 .invite-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+
+input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:pointer}
 </style>
 </head>
 <body>
 <div id="toast-container"></div>
+
+<!-- MODAL -->
+<div class="modal-overlay hidden" id="modal-overlay">
+  <div class="modal" id="modal-content"></div>
+</div>
 
 <!-- LOGIN -->
 <div id="page-login" class="page active">
@@ -170,24 +205,14 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
       <div class="logo-tag">secure file sharing</div>
     </div>
     <div id="login-form" class="login-box">
+      <div><div class="field-label">username</div><input type="text" id="l-user" autocomplete="username" spellcheck="false"></div>
       <div>
-        <div class="field-label">username</div>
-        <input type="text" id="l-user" autocomplete="username" spellcheck="false">
-      </div>
-      <div>
-        <div class="field-row">
-          <div class="field-label" style="flex:1">password</div>
-          <div class="pw-toggle">
-            <span id="pw-text" onclick="togglePw('text')">text</span>
-            <span id="pw-hide" class="on" onclick="togglePw('hide')">hide</span>
-          </div>
+        <div class="field-row"><div class="field-label" style="flex:1">password</div>
+          <div class="pw-toggle"><span id="pw-text" onclick="togglePw('text')">text</span><span id="pw-hide" class="on" onclick="togglePw('hide')">hide</span></div>
         </div>
         <input type="password" id="l-pass" autocomplete="current-password">
       </div>
-      <div id="totp-field" class="hidden">
-        <div class="field-label">authenticator code</div>
-        <input type="text" id="l-totp" maxlength="6" placeholder="______" style="text-align:center;letter-spacing:.2em">
-      </div>
+      <div id="totp-field" class="hidden"><div class="field-label">authenticator code</div><input type="text" id="l-totp" maxlength="6" placeholder="______" style="text-align:center;letter-spacing:.2em"></div>
       <div class="err" id="l-err"></div>
       <button class="btn btn-full btn-red" onclick="doLogin()">login</button>
       <div class="divider">or</div>
@@ -207,7 +232,9 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
       <div class="login-links"><a onclick="showLogin()">&#8592; back to login</a></div>
     </div>
     <div class="footer-nav">
-      <a href="#">terms</a><a href="#">privacy</a><a href="https://github.com/mcrsft/Clinqies-xyz" target="_blank">github</a>
+      <a href="#">terms</a><a href="#">privacy</a>
+      <a onclick="showSection('shortener');showPage('dashboard')">url shortener</a>
+      <a href="https://github.com/mcrsft/Clinqies-xyz" target="_blank">github</a>
     </div>
   </div>
 </div>
@@ -220,6 +247,7 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
       <div class="topbar-user">logged in as <b id="tb-username">—</b></div>
       <div class="topbar-nav">
         <a onclick="showSection('files')">files</a>
+        <a onclick="showSection('shortener')">shortener</a>
         <a onclick="showSection('settings')">settings</a>
         <a id="admin-link" class="hidden" onclick="showSection('admin')">admin</a>
         <a onclick="doLogout()">logout</a>
@@ -231,6 +259,7 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
       <div class="sb-section">navigate</div>
       <div class="sb-item active" onclick="showSection('upload')" id="sb-upload"><span class="sb-icon">&#8679;</span> upload</div>
       <div class="sb-item" onclick="showSection('files')" id="sb-files"><span class="sb-icon">&#9776;</span> my files</div>
+      <div class="sb-item" onclick="showSection('shortener')" id="sb-shortener"><span class="sb-icon">&#9135;</span> shortener</div>
       <div class="sb-item" onclick="showSection('settings')" id="sb-settings"><span class="sb-icon">&#9881;</span> settings</div>
       <div class="sb-item hidden" onclick="showSection('admin')" id="sb-admin"><span class="sb-icon">&#9760;</span> admin</div>
       <div class="sb-quota">
@@ -250,24 +279,54 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
           <div class="stat"><div class="stat-l">total views</div><div class="stat-v" id="s-views">—</div></div>
           <div class="stat"><div class="stat-l">server used</div><div class="stat-v" id="s-server">—</div></div>
         </div>
+
+        <div class="upload-options">
+          <label>expiry:
+            <select id="expiry-select" style="margin-left:6px">
+              <option value="">never</option>
+              <option value="1">1 hour</option>
+              <option value="6">6 hours</option>
+              <option value="24">24 hours</option>
+              <option value="72">3 days</option>
+              <option value="168">7 days</option>
+              <option value="720">30 days</option>
+            </select>
+          </label>
+        </div>
+
         <div class="upload-zone" id="upload-zone">
           <input type="file" id="file-input" onchange="handleFileSelect(this.files)">
           <div class="uz-icon">&#8679;</div>
           <div class="uz-text"><b>click to select</b> or drag and drop</div>
           <div class="uz-sub">max 50mb &middot; images &middot; video &middot; audio &middot; archives &middot; text</div>
+          <div class="uz-paste-hint">ctrl+v to paste image from clipboard</div>
         </div>
-        <div class="upload-progress" id="upload-progress">
+
+        <div id="upload-progress" style="display:none;margin-bottom:16px">
           <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
           <div class="progress-label" id="progress-label">uploading...</div>
         </div>
+
         <div id="upload-result" class="hidden">
-          <div class="sec-title" style="margin-bottom:10px">uploaded</div>
-          <div class="sg-row">
-            <span class="sg-label">url</span>
+          <div class="sec-title" style="margin-bottom:12px">uploaded</div>
+          <div class="sg-row" style="margin-bottom:10px">
+            <span class="sg-label">direct url</span>
             <span class="code-pill" id="ur-url"></span>
             <button class="btn btn-sm" onclick="copyText(document.getElementById('ur-url').textContent)">copy</button>
           </div>
+          <div class="embed-tabs" style="margin-bottom:6px">
+            <span class="embed-tab active" onclick="switchEmbed('direct')">direct</span>
+            <span class="embed-tab" onclick="switchEmbed('img')">img tag</span>
+            <span class="embed-tab" onclick="switchEmbed('md')">markdown</span>
+            <span class="embed-tab" onclick="switchEmbed('bb')">bbcode</span>
+          </div>
+          <div class="embed-code" id="embed-code"></div>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn btn-sm" onclick="copyText(document.getElementById('embed-code').textContent)">copy embed</button>
+            <button class="btn btn-sm" onclick="shortenLastUpload()">shorten url</button>
+          </div>
         </div>
+
         <div class="sec-title" style="margin-top:8px">recent uploads</div>
         <table class="file-tbl"><thead><tr><th>file</th><th>size</th><th>views</th><th>date</th><th></th></tr></thead><tbody id="recent-tbody"></tbody></table>
       </div>
@@ -284,9 +343,62 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
             </select>
           </div>
         </div>
-        <table class="file-tbl"><thead><tr><th>file</th><th>size</th><th>type</th><th>views</th><th>uploaded</th><th></th></tr></thead><tbody id="files-tbody"></tbody></table>
+
+        <div class="bulk-bar" id="bulk-bar">
+          <span id="bulk-count">0 selected</span>
+          <button class="btn btn-sm btn-danger" onclick="bulkDelete()">delete selected</button>
+          <button class="btn btn-sm" onclick="createGallery()">create gallery</button>
+          <button class="btn btn-sm" onclick="clearSelection()">clear</button>
+        </div>
+
+        <table class="file-tbl">
+          <thead><tr>
+            <th class="check-col"><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"></th>
+            <th>file</th><th>size</th><th>type</th><th>views</th><th>uploaded</th><th></th>
+          </tr></thead>
+          <tbody id="files-tbody"></tbody>
+        </table>
         <div class="empty-state hidden" id="files-empty">no files uploaded yet</div>
         <div class="pagination" id="pagination"></div>
+      </div>
+
+      <!-- SHORTENER -->
+      <div class="section" id="sec-shortener">
+        <div class="sec-title">url shortener</div>
+        <div style="border:1px solid var(--border);border-top:2px solid var(--red);padding:16px;margin-bottom:20px">
+          <div class="field-label" style="margin-bottom:8px">shorten a url</div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">
+            <div style="flex:1;min-width:200px">
+              <div class="field-label" style="margin-bottom:4px">url</div>
+              <input type="text" id="short-url-input" placeholder="https://..." style="width:100%">
+            </div>
+            <div>
+              <div class="field-label" style="margin-bottom:4px">expires</div>
+              <select id="short-expires" style="background:var(--bg);border:1px solid var(--border2);color:var(--text2);padding:8px 10px">
+                <option value="">never</option>
+                <option value="1">1 hour</option>
+                <option value="24">24 hours</option>
+                <option value="168">7 days</option>
+                <option value="720">30 days</option>
+              </select>
+            </div>
+            <button class="btn btn-sm btn-red" onclick="createShortUrl()" style="height:37px">shorten</button>
+          </div>
+          <div id="short-result" class="hidden" style="margin-top:12px">
+            <div class="sg-row">
+              <span class="sg-label">short url</span>
+              <span class="code-pill" id="short-result-url"></span>
+              <button class="btn btn-sm" onclick="copyText(document.getElementById('short-result-url').textContent)">copy</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="sec-title">my short urls</div>
+        <table class="short-tbl">
+          <thead><tr><th>short url</th><th>target</th><th>clicks</th><th>expires</th><th></th></tr></thead>
+          <tbody id="short-tbody"></tbody>
+        </table>
+        <div class="empty-state hidden" id="short-empty">no short urls yet</div>
       </div>
 
       <!-- SETTINGS -->
@@ -306,7 +418,7 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
             <div id="totp-enable-flow">
               <button class="btn btn-sm" onclick="setup2FA()">enable totp 2fa</button>
               <div class="qr-wrap" id="qr-wrap">
-                <img id="qr-img" src="" alt="QR code">
+                <img id="qr-img" src="" alt="QR">
                 <div class="qr-instructions">scan with google authenticator or authy, then confirm with the 6-digit code.</div>
                 <div class="totp-input-row"><input type="text" id="totp-confirm-input" maxlength="6" placeholder="000000"><button class="btn btn-sm" onclick="confirm2FA()">confirm &amp; enable</button></div>
               </div>
@@ -358,40 +470,256 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus{border
 </div>
 
 <script>
-let currentUser=null,currentPage=1;
+let currentUser=null,currentPage=1,selectedFiles=new Set(),lastUploadUrl='',lastUploadMime='';
+
+// ── TOAST ──
 function toast(msg,type='info'){const el=document.createElement('div');el.className=`toast ${type}`;el.textContent=msg;document.getElementById('toast-container').appendChild(el);requestAnimationFrame(()=>el.classList.add('show'));setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),300)},3000);}
+
+// ── MODAL ──
+function showModal(html){document.getElementById('modal-content').innerHTML=html;document.getElementById('modal-overlay').classList.remove('hidden');}
+function closeModal(){document.getElementById('modal-overlay').classList.add('hidden');}
+document.addEventListener('click',e=>{if(e.target.id==='modal-overlay')closeModal();});
+
+// ── PAGES ──
 function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+id)?.classList.add('active');}
-function showSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.sb-item').forEach(s=>s.classList.remove('active'));document.getElementById('sec-'+id)?.classList.add('active');document.getElementById('sb-'+id)?.classList.add('active');if(id==='files'){currentPage=1;loadFiles();}if(id==='admin')loadAdmin();}
+function showSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.sb-item').forEach(s=>s.classList.remove('active'));document.getElementById('sec-'+id)?.classList.add('active');document.getElementById('sb-'+id)?.classList.add('active');if(id==='files'){currentPage=1;loadFiles();}if(id==='admin')loadAdmin();if(id==='shortener')loadShortUrls();}
 function showLogin(){document.getElementById('login-form').classList.remove('hidden');document.getElementById('register-form').classList.add('hidden');}
 function showRegister(){document.getElementById('login-form').classList.add('hidden');document.getElementById('register-form').classList.remove('hidden');}
 function togglePw(mode){document.getElementById('l-pass').type=mode==='text'?'text':'password';document.getElementById('pw-text').classList.toggle('on',mode==='text');document.getElementById('pw-hide').classList.toggle('on',mode==='hide');}
+
+// ── API ──
 async function api(method,path,body){const opts={method,credentials:'include',headers:{}};if(body){opts.headers['Content-Type']='application/json';opts.body=JSON.stringify(body);}const r=await fetch('/api'+path,opts);const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(data.error||'request failed');return data;}
+
+// ── AUTH ──
 async function doLogin(){const username=document.getElementById('l-user').value.trim();const password=document.getElementById('l-pass').value;const totp=document.getElementById('l-totp').value.trim();document.getElementById('l-err').textContent='';try{const res=await api('POST','/auth/login',{username,password,totp:totp||undefined});if(res.requires2fa){document.getElementById('totp-field').classList.remove('hidden');document.getElementById('l-err').textContent='enter your authenticator code';return;}currentUser=res.user;initDashboard();showPage('dashboard');}catch(e){document.getElementById('l-err').textContent=e.message;}}
 async function doRegister(){const invite=document.getElementById('r-invite').value.trim();const username=document.getElementById('r-user').value.trim();const email=document.getElementById('r-email').value.trim();const password=document.getElementById('r-pass').value;document.getElementById('r-err').textContent='';try{await api('POST','/auth/register',{invite,username,email,password});toast('account created! please log in','success');showLogin();}catch(e){document.getElementById('r-err').textContent=e.message;}}
 async function doLogout(){try{await api('POST','/auth/logout');}catch(e){}currentUser=null;showPage('login');}
+
+// ── INIT ──
 function initDashboard(){const u=currentUser;document.getElementById('tb-username').textContent=u.username;document.getElementById('api-key-display').textContent=u.api_key;document.getElementById('set-username').textContent=u.username;document.getElementById('set-email').textContent=u.email;document.getElementById('set-role').textContent=u.role;document.getElementById('set-joined').textContent=fmtDate(u.created_at);if(u.totp_enabled){document.getElementById('totp-status').textContent='enabled';document.getElementById('totp-status').style.color='#aa3333';document.getElementById('totp-enable-flow').classList.add('hidden');document.getElementById('totp-disable-flow').classList.remove('hidden');}if(u.role==='admin'){document.getElementById('admin-link').classList.remove('hidden');document.getElementById('sb-admin').classList.remove('hidden');}loadStats();loadRecentFiles();}
+
 async function loadStats(){try{const s=await api('GET','/files/stats');document.getElementById('s-files').textContent=s.file_count;document.getElementById('s-size').textContent=fmtSize(s.total_size);document.getElementById('s-views').textContent=s.total_views;document.getElementById('s-server').textContent=fmtSize(s.global_used);const pct=Math.min(100,(s.global_used/s.global_quota)*100);document.getElementById('quota-fill').style.width=pct.toFixed(1)+'%';document.getElementById('quota-used').textContent=fmtSize(s.global_used);}catch(e){}}
-document.addEventListener('DOMContentLoaded',()=>{const zone=document.getElementById('upload-zone');zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over');});zone.addEventListener('dragleave',()=>zone.classList.remove('over'));zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('over');handleFileSelect(e.dataTransfer.files);});document.getElementById('l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});document.getElementById('l-user').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});api('GET','/auth/me').then(user=>{currentUser=user;initDashboard();showPage('dashboard');}).catch(()=>{});});
+
+// ── UPLOAD ──
+document.addEventListener('DOMContentLoaded',()=>{
+  const zone=document.getElementById('upload-zone');
+  zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over');});
+  zone.addEventListener('dragleave',()=>zone.classList.remove('over'));
+  zone.addEventListener('drop',e=>{e.preventDefault();zone.classList.remove('over');handleFileSelect(e.dataTransfer.files);});
+  document.getElementById('l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+  document.getElementById('l-user').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+
+  // Paste to upload
+  document.addEventListener('paste',e=>{
+    if(document.getElementById('page-dashboard').classList.contains('active')){
+      const items=e.clipboardData?.items;
+      if(!items)return;
+      for(const item of items){
+        if(item.type.startsWith('image/')){
+          const file=item.getAsFile();
+          if(file){toast('pasting image...','info');uploadFile(file);break;}
+        }
+      }
+    }
+  });
+
+  api('GET','/auth/me').then(user=>{currentUser=user;initDashboard();showPage('dashboard');}).catch(()=>{});
+});
+
 function handleFileSelect(files){if(files&&files[0])uploadFile(files[0]);}
-async function uploadFile(file){if(file.size>50*1024*1024){toast('file exceeds 50MB limit','error');return;}const prog=document.getElementById('upload-progress');const fill=document.getElementById('progress-fill');const label=document.getElementById('progress-label');const result=document.getElementById('upload-result');prog.style.display='block';result.classList.add('hidden');fill.style.width='0%';label.textContent='uploading '+file.name+'...';const form=new FormData();form.append('file',file);const xhr=new XMLHttpRequest();xhr.open('POST','/api/upload');xhr.withCredentials=true;xhr.upload.onprogress=e=>{if(e.lengthComputable){const pct=(e.loaded/e.total*100).toFixed(0);fill.style.width=pct+'%';label.textContent=`uploading... ${pct}%`;}};xhr.onload=()=>{prog.style.display='none';const data=JSON.parse(xhr.responseText);if(data.url){document.getElementById('ur-url').textContent=data.url;result.classList.remove('hidden');copyText(data.url);toast('uploaded! url copied','success');loadStats();loadRecentFiles();}else toast(data.error||'upload failed','error');};xhr.onerror=()=>{prog.style.display='none';toast('upload failed','error');};xhr.send(form);}
+
+async function uploadFile(file){
+  if(file.size>50*1024*1024){toast('file exceeds 50MB limit','error');return;}
+  const expiryHours=document.getElementById('expiry-select')?.value||'';
+  const prog=document.getElementById('upload-progress');
+  const fill=document.getElementById('progress-fill');
+  const label=document.getElementById('progress-label');
+  const result=document.getElementById('upload-result');
+  prog.style.display='block';result.classList.add('hidden');fill.style.width='0%';
+  label.textContent='uploading '+file.name+'...';
+  const form=new FormData();form.append('file',file);
+  const url='/api/upload'+(expiryHours?`?expires_in_hours=${expiryHours}`:'');
+  const xhr=new XMLHttpRequest();xhr.open('POST',url);xhr.withCredentials=true;
+  xhr.upload.onprogress=e=>{if(e.lengthComputable){const pct=(e.loaded/e.total*100).toFixed(0);fill.style.width=pct+'%';label.textContent=`uploading... ${pct}%`;}};
+  xhr.onload=()=>{
+    prog.style.display='none';
+    const data=JSON.parse(xhr.responseText);
+    if(data.url){
+      lastUploadUrl=data.url;lastUploadMime=file.type;
+      document.getElementById('ur-url').textContent=data.url;
+      setEmbedCode('direct',data.url,file.type);
+      result.classList.remove('hidden');
+      copyText(data.url);toast('uploaded! url copied','success');
+      loadStats();loadRecentFiles();
+    }else toast(data.error||'upload failed','error');
+  };
+  xhr.onerror=()=>{prog.style.display='none';toast('upload failed','error');};
+  xhr.send(form);
+}
+
+// ── EMBED CODES ──
+let currentEmbedUrl='',currentEmbedMime='';
+function setEmbedCode(type,url,mime){
+  currentEmbedUrl=url;currentEmbedMime=mime;
+  document.querySelectorAll('.embed-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector(`.embed-tab[onclick="switchEmbed('${type}')"]`)?.classList.add('active');
+  const el=document.getElementById('embed-code');
+  const isImg=mime&&mime.startsWith('image/');
+  if(type==='direct')el.textContent=url;
+  else if(type==='img')el.textContent=isImg?`<img src="${url}" alt="image">`:`<a href="${url}">${url}</a>`;
+  else if(type==='md')el.textContent=isImg?`![image](${url})`:`[link](${url})`;
+  else if(type==='bb')el.textContent=isImg?`[img]${url}[/img]`:`[url]${url}[/url]`;
+}
+function switchEmbed(type){setEmbedCode(type,currentEmbedUrl,currentEmbedMime);}
+
+// ── SHORT URL FROM UPLOAD ──
+async function shortenLastUpload(){
+  if(!lastUploadUrl)return;
+  try{const res=await api('POST','/short',{url:lastUploadUrl});copyText(res.short_url);toast('short url copied: '+res.short_url,'success');}
+  catch(e){toast(e.message,'error');}
+}
+
+// ── FILES ──
 async function loadRecentFiles(){try{const res=await api('GET','/files?limit=5&sort=created_at&order=desc');renderFileTable('recent-tbody',res.files,true);}catch(e){}}
-async function loadFiles(){const sort=document.getElementById('sort-select').value;const[s,o]=sort.split(':');try{const res=await api('GET',`/files?page=${currentPage}&limit=30&sort=${s}&order=${o}`);renderFileTable('files-tbody',res.files,false);document.getElementById('files-empty').classList.toggle('hidden',res.files.length>0);renderPagination(res.total,res.page,res.limit);}catch(e){}}
-function renderFileTable(tbodyId,files,compact){const tbody=document.getElementById(tbodyId);if(!files||!files.length){tbody.innerHTML=`<tr><td colspan="6" class="empty-state">no files</td></tr>`;return;}tbody.innerHTML=files.map(f=>{const ext=f.filename.split('.').pop().toUpperCase();return`<tr><td><span class="fext">${ext}</span><span class="fname" onclick="openFile('${f.url}')">${esc(f.original_name)}</span></td><td class="dim">${fmtSize(f.size)}</td>${!compact?`<td class="dim">${f.mime_type.split('/')[0]}</td>`:''}<td class="dim">${f.views}</td><td class="dim">${fmtDate(f.created_at)}</td><td><div class="file-acts"><button onclick="copyText('${f.url}')">copy</button><button onclick="openFile('${f.url}')">view</button><button class="del" onclick="deleteFile(${f.id},this)">delete</button></div></td></tr>`;}).join('');}
+
+async function loadFiles(){
+  const sort=document.getElementById('sort-select').value;const[s,o]=sort.split(':');
+  try{
+    const res=await api('GET',`/files?page=${currentPage}&limit=30&sort=${s}&order=${o}`);
+    renderFileTable('files-tbody',res.files,false);
+    document.getElementById('files-empty').classList.toggle('hidden',res.files.length>0);
+    renderPagination(res.total,res.page,res.limit);
+  }catch(e){}
+}
+
+function renderFileTable(tbodyId,files,compact){
+  const tbody=document.getElementById(tbodyId);
+  if(!files||!files.length){tbody.innerHTML=`<tr><td colspan="7" class="empty-state">no files</td></tr>`;return;}
+  tbody.innerHTML=files.map(f=>{
+    const ext=f.filename.split('.').pop().toUpperCase();
+    const expBadge=f.expires_at?`<span class="expiry-badge">exp ${fmtDate(f.expires_at)}</span>`:'';
+    return`<tr data-id="${f.id}">
+      ${!compact?`<td><input type="checkbox" onchange="toggleSelect(${f.id},this)" ${selectedFiles.has(f.id)?'checked':''}></td>`:'<td></td>'}
+      <td><span class="fext">${ext}</span><span class="fname" onclick="openFile('${f.url}')">${esc(f.original_name)}</span>${expBadge}</td>
+      <td class="dim">${fmtSize(f.size)}</td>
+      ${!compact?`<td class="dim">${f.mime_type.split('/')[0]}</td>`:''}
+      <td class="dim">${f.views}</td>
+      <td class="dim">${fmtDate(f.created_at)}</td>
+      <td><div class="file-acts">
+        <button onclick="copyText('${f.url}')">copy</button>
+        <button onclick="openFile('${f.url}')">view</button>
+        <button onclick="showEmbedModal('${f.url}','${f.mime_type}')">embed</button>
+        <button class="del" onclick="deleteFile(${f.id},this)">delete</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function showEmbedModal(url,mime){
+  const isImg=mime&&mime.startsWith('image/');
+  const direct=url;
+  const img=isImg?`<img src="${url}" alt="image">`:`<a href="${url}">${url}</a>`;
+  const md=isImg?`![image](${url})`:`[link](${url})`;
+  const bb=isImg?`[img]${url}[/img]`:`[url]${url}[/url]`;
+  showModal(`
+    <div class="modal-title">embed codes</div>
+    <div style="display:flex;flex-direction:column;gap:10px">
+      ${[['direct url',direct],['img / html',img],['markdown',md],['bbcode',bb]].map(([label,code])=>`
+        <div>
+          <div class="field-label" style="margin-bottom:4px">${label}</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <div class="embed-code" style="flex:1;font-size:10px">${esc(code)}</div>
+            <button class="btn btn-sm" onclick="copyText('${code.replace(/'/g,"\\'")}')">copy</button>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+    <div class="modal-actions"><button class="btn btn-sm" onclick="closeModal()">close</button></div>
+  `);
+}
+
+// ── SELECTION ──
+function toggleSelect(id,cb){if(cb.checked)selectedFiles.add(id);else selectedFiles.delete(id);updateBulkBar();}
+function toggleSelectAll(cb){const checkboxes=document.querySelectorAll('#files-tbody input[type=checkbox]');checkboxes.forEach(c=>{c.checked=cb.checked;const id=parseInt(c.closest('tr').dataset.id);if(cb.checked)selectedFiles.add(id);else selectedFiles.delete(id);c.closest('tr').classList.toggle('selected',cb.checked);});updateBulkBar();}
+function clearSelection(){selectedFiles.clear();document.querySelectorAll('#files-tbody input[type=checkbox]').forEach(c=>{c.checked=false;c.closest('tr').classList.remove('selected');});document.getElementById('select-all').checked=false;updateBulkBar();}
+function updateBulkBar(){const bar=document.getElementById('bulk-bar');const count=selectedFiles.size;bar.classList.toggle('show',count>0);document.getElementById('bulk-count').textContent=`${count} selected`;}
+
+async function bulkDelete(){
+  if(!selectedFiles.size)return;
+  if(!confirm(`delete ${selectedFiles.size} file(s) permanently?`))return;
+  try{await api('DELETE','/files',{ids:[...selectedFiles]});toast(`deleted ${selectedFiles.size} file(s)`,'success');selectedFiles.clear();loadFiles();loadStats();}
+  catch(e){toast(e.message,'error');}
+}
+
+async function createGallery(){
+  if(!selectedFiles.size){toast('select files first','error');return;}
+  const name=prompt('gallery name (optional):','my gallery');
+  if(name===null)return;
+  try{
+    const res=await api('POST','/gallery',{name:name||'gallery',file_ids:[...selectedFiles]});
+    copyText(res.gallery_url);
+    toast('gallery created! url copied','success');
+    clearSelection();
+  }catch(e){toast(e.message,'error');}
+}
+
 function renderPagination(total,page,limit){const pages=Math.ceil(total/limit);const el=document.getElementById('pagination');if(pages<=1){el.innerHTML='';return;}el.innerHTML=`<button class="btn btn-sm" onclick="changePage(${page-1})" ${page<=1?'disabled':''}>&larr;</button><span>page ${page} / ${pages} &nbsp;&middot;&nbsp; ${total} files</span><button class="btn btn-sm" onclick="changePage(${page+1})" ${page>=pages?'disabled':''}>&rarr;</button>`;}
 function changePage(p){currentPage=p;loadFiles();}
+
 async function deleteFile(id,btn){if(!confirm('delete this file permanently?'))return;try{await api('DELETE',`/files/${id}`);btn.closest('tr').remove();toast('file deleted','success');loadStats();}catch(e){toast(e.message,'error');}}
 function openFile(url){window.open(url,'_blank');}
+
+// ── SHORTENER ──
+async function createShortUrl(){
+  const url=document.getElementById('short-url-input').value.trim();
+  const expires=document.getElementById('short-expires').value;
+  if(!url){toast('enter a url','error');return;}
+  try{
+    const res=await api('POST','/short',{url,expires_in_hours:expires||undefined});
+    document.getElementById('short-result-url').textContent=res.short_url;
+    document.getElementById('short-result').classList.remove('hidden');
+    copyText(res.short_url);toast('short url copied','success');
+    loadShortUrls();
+  }catch(e){toast(e.message,'error');}
+}
+
+async function loadShortUrls(){
+  try{
+    const res=await api('GET','/short');
+    const tbody=document.getElementById('short-tbody');
+    const empty=document.getElementById('short-empty');
+    empty.classList.toggle('hidden',res.urls.length>0);
+    tbody.innerHTML=res.urls.map(u=>`<tr>
+      <td><span class="fname" onclick="copyText('${u.short_url}')">${u.short_url}</span></td>
+      <td class="dim" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(u.target_url)}</td>
+      <td class="dim">${u.clicks}</td>
+      <td class="dim">${u.expires_at?fmtDate(u.expires_at):'never'}</td>
+      <td><div class="file-acts">
+        <button onclick="copyText('${u.short_url}')">copy</button>
+        <button class="del" onclick="deleteShortUrl(${u.id},this)">delete</button>
+      </div></td>
+    </tr>`).join('');
+  }catch(e){}
+}
+
+async function deleteShortUrl(id,btn){try{await api('DELETE',`/short/${id}`);btn.closest('tr').remove();toast('deleted','success');}catch(e){toast(e.message,'error');}}
+
+// ── SETTINGS ──
 function downloadShareXConfig(){window.location.href='/api/config/sharex';}
 function downloadShellScript(){window.location.href='/api/config/flameshot';}
-async function regenApiKey(){const pw=prompt('enter your password to regenerate the api key:');if(!pw)return;try{const res=await api('POST','/auth/apikey/regen',{password:pw});document.getElementById('api-key-display').textContent=res.api_key;toast('api key regenerated','success');}catch(e){toast(e.message,'error');}}
+async function regenApiKey(){const pw=prompt('enter your password:');if(!pw)return;try{const res=await api('POST','/auth/apikey/regen',{password:pw});document.getElementById('api-key-display').textContent=res.api_key;toast('api key regenerated','success');}catch(e){toast(e.message,'error');}}
 async function setup2FA(){try{const res=await api('POST','/auth/2fa/setup');document.getElementById('qr-img').src=res.qr;document.getElementById('qr-wrap').style.display='block';}catch(e){toast(e.message,'error');}}
 async function confirm2FA(){const token=document.getElementById('totp-confirm-input').value.trim();try{await api('POST','/auth/2fa/confirm',{token});toast('2fa enabled','success');document.getElementById('totp-status').textContent='enabled';document.getElementById('totp-status').style.color='#aa3333';document.getElementById('totp-enable-flow').classList.add('hidden');document.getElementById('totp-disable-flow').classList.remove('hidden');}catch(e){toast(e.message,'error');}}
 async function disable2FA(){const password=document.getElementById('totp-disable-pass').value;try{await api('DELETE','/auth/2fa',{password});toast('2fa disabled','info');document.getElementById('totp-status').textContent='disabled';document.getElementById('totp-status').style.color='';document.getElementById('totp-enable-flow').classList.remove('hidden');document.getElementById('totp-disable-flow').classList.add('hidden');}catch(e){toast(e.message,'error');}}
+
+// ── ADMIN ──
 async function loadAdmin(){try{const[stats,users,invites]=await Promise.all([api('GET','/admin/stats'),api('GET','/admin/users'),api('GET','/admin/invites')]);document.getElementById('a-users').textContent=stats.user_count;document.getElementById('a-files').textContent=stats.file_count;document.getElementById('a-size').textContent=fmtSize(stats.total_size);document.getElementById('a-invites').textContent=stats.pending_invites;document.getElementById('admin-users-tbody').innerHTML=users.users.map(u=>`<tr><td style="color:var(--bright)">${esc(u.username)}</td><td class="dim">${esc(u.email)}</td><td><span class="role-badge ${u.role}">${u.role}</span></td><td class="dim">${u.file_count}</td><td class="dim">${fmtSize(u.storage_used)}</td><td class="dim">${u.last_seen?fmtDate(u.last_seen):'never'}</td><td><div class="file-acts"><button onclick="toggleRole(${u.id},'${u.role==='admin'?'user':'admin'}')">${u.role==='admin'?'demote':'promote'}</button><button class="del" onclick="deleteUser(${u.id})">delete</button></div></td></tr>`).join('');const pending=invites.invites.filter(i=>!i.used_by);document.getElementById('invite-empty').classList.toggle('hidden',pending.length>0);document.getElementById('invite-grid').innerHTML=pending.map(i=>`<div style="display:flex;align-items:center;gap:6px"><span class="invite-code">${i.code}</span><button class="btn btn-sm" onclick="copyText('${i.code}')">copy</button><button class="btn btn-sm btn-danger" onclick="revokeInvite(${i.id})">revoke</button></div>`).join('');}catch(e){toast(e.message,'error');}}
 async function generateInvites(){const count=document.getElementById('inv-count').value;const days=document.getElementById('inv-expires').value;try{const res=await api('POST','/admin/invites',{count:parseInt(count),expires_in_days:days||undefined});document.getElementById('new-invite-grid').innerHTML=res.codes.map(c=>`<div style="display:flex;align-items:center;gap:6px"><span class="invite-code">${c}</span><button class="btn btn-sm" onclick="copyText('${c}')">copy</button></div>`).join('');toast(`generated ${res.codes.length} invite(s)`,'success');loadAdmin();}catch(e){toast(e.message,'error');}}
-async function revokeInvite(id){try{await api('DELETE',`/admin/invites/${id}`);loadAdmin();toast('invite revoked','info');}catch(e){toast(e.message,'error');}}
+async function revokeInvite(id){try{await api('DELETE',`/admin/invites/${id}`);loadAdmin();toast('revoked','info');}catch(e){toast(e.message,'error');}}
 async function toggleRole(id,role){try{await api('PATCH',`/admin/users/${id}/role`,{role});loadAdmin();toast('role updated','success');}catch(e){toast(e.message,'error');}}
 async function deleteUser(id){if(!confirm('delete this user and all their files?'))return;try{await api('DELETE',`/admin/users/${id}`);loadAdmin();toast('user deleted','success');}catch(e){toast(e.message,'error');}}
+
+// ── UTILS ──
 function copyText(text){navigator.clipboard.writeText(text).then(()=>toast('copied','info')).catch(()=>{const el=document.createElement('textarea');el.value=text;document.body.appendChild(el);el.select();document.execCommand('copy');el.remove();toast('copied','info');});}
 function fmtSize(b){if(!b)return'0 B';const units=['B','KB','MB','GB','TB'];let i=0,n=b;while(n>=1024&&i<units.length-1){n/=1024;i++;}return n.toFixed(i===0?0:1)+' '+units[i];}
 function fmtDate(ts){if(!ts)return'—';return new Date(ts*1000).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'2-digit'});}
