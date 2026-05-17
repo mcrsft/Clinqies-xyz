@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>clinqies.xyz — setup guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--surface:#111;--surface2:#161616;
+  --border:#1f1f1f;--border2:#2a2a2a;
+  --red:#cc1b1b;--red2:#a81515;--red3:#e02020;
+  --text:#c8c8c8;--text2:#666;--text3:#3a3a3a;
+  --bright:#f0f0f0;--white:#fff;
+  --serif:'Playfair Display',Georgia,serif;
+  --mono:'Share Tech Mono','Courier New',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;min-height:100vh;letter-spacing:.03em}
+a{color:var(--red);text-decoration:none}a:hover{color:var(--red3)}
+input,button{font-family:var(--mono);font-size:13px;outline:none}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+/* TOAST */
+#toast-container{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
+.toast{background:var(--surface2);border-left:3px solid var(--red);padding:10px 16px;font-size:11px;letter-spacing:.08em;opacity:0;transform:translateX(20px);transition:all .2s}
+.toast.show{opacity:1;transform:translateX(0)}
+.toast.success{border-color:#883333;color:#dd8888}
+.toast.info{border-color:var(--red);color:var(--text)}
+
+/* HEADER */
+.topbar{border-bottom:1px solid var(--border);padding:0 32px;display:flex;align-items:center;justify-content:space-between;background:var(--surface);height:46px}
+.topbar-logo{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--white);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:10px;text-decoration:none}
+.topbar-logo::before{content:'';display:inline-block;width:4px;height:22px;background:var(--red)}
+.topbar-nav{display:flex;gap:16px;font-size:9px;letter-spacing:.15em}
+.topbar-nav a{color:var(--text2);text-transform:uppercase;transition:color .1s}
+.topbar-nav a:hover{color:var(--red)}
+
+/* HERO */
+.hero{position:relative;overflow:hidden;padding:60px 32px 50px;text-align:center}
+.hero::before{content:'';position:absolute;top:0;left:0;right:0;height:100%;background:var(--red2);clip-path:polygon(0 0,100% 0,100% 65%,50% 100%,0 65%);z-index:0;opacity:.15}
+.hero-content{position:relative;z-index:1}
+.hero-title{font-family:var(--serif);font-size:42px;font-weight:900;color:var(--white);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.hero-sub{font-size:11px;color:var(--text2);letter-spacing:.18em;text-transform:uppercase;margin-bottom:30px}
+.hero-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+.btn{background:transparent;border:1px solid var(--text2);color:var(--text);font-family:var(--mono);font-size:10px;letter-spacing:.2em;padding:10px 20px;text-transform:uppercase;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;gap:8px;cursor:pointer;text-decoration:none}
+.btn:hover{background:rgba(204,27,27,.08);border-color:var(--red);color:var(--bright)}
+.btn-red{background:var(--red);border-color:var(--red);color:var(--white)}
+.btn-red:hover{background:var(--red3);border-color:var(--red3);color:var(--white)}
+.btn-sm{font-size:9px;padding:5px 12px;letter-spacing:.12em}
+
+/* MAIN CONTENT */
+.main{max-width:800px;margin:0 auto;padding:40px 32px 80px}
+
+/* AUTH GATE */
+.auth-gate{border:1px solid var(--border2);border-top:3px solid var(--red);padding:24px;margin-bottom:40px;text-align:center}
+.auth-gate-title{font-size:10px;letter-spacing:.2em;color:var(--text2);text-transform:uppercase;margin-bottom:12px}
+.auth-gate-body{font-size:12px;color:var(--text);margin-bottom:16px;line-height:1.6}
+.login-inline{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+.login-inline input{background:var(--bg);border:1px solid var(--border2);color:var(--bright);padding:7px 10px;width:160px;letter-spacing:.04em}
+.login-inline input:focus{border-color:var(--red);outline:none}
+.err{font-size:11px;color:#cc4444;text-align:center;min-height:15px;margin-top:8px;letter-spacing:.06em}
+
+/* QUICK START */
+.quickstart{border:1px solid var(--border);border-top:3px solid var(--red);padding:24px;margin-bottom:40px}
+.qs-title{font-size:10px;letter-spacing:.2em;color:var(--text2);text-transform:uppercase;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.qs-steps{display:flex;flex-direction:column;gap:16px}
+.qs-step{display:flex;gap:16px;align-items:flex-start}
+.qs-num{width:28px;height:28px;background:var(--red);color:var(--white);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;font-family:var(--serif)}
+.qs-body{flex:1}
+.qs-step-title{font-size:12px;color:var(--bright);margin-bottom:4px;letter-spacing:.04em}
+.qs-step-desc{font-size:11px;color:var(--text2);line-height:1.6;letter-spacing:.03em}
+.qs-action{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.code-block{background:var(--bg);border:1px solid var(--border2);padding:8px 12px;font-size:11px;color:var(--bright);letter-spacing:.06em;margin-top:8px;word-break:break-all}
+
+/* AUTO IMPORT */
+.import-box{background:var(--surface2);border:1px solid var(--border2);border-left:3px solid var(--red);padding:16px;margin-top:12px}
+.import-box-title{font-size:9px;letter-spacing:.18em;color:var(--text2);text-transform:uppercase;margin-bottom:10px}
+.import-url{font-size:11px;color:var(--bright);word-break:break-all;margin-bottom:10px;line-height:1.5}
+.import-note{font-size:10px;color:var(--text3);letter-spacing:.06em;margin-top:8px;line-height:1.5}
+
+/* TUTORIAL SECTIONS */
+.tutorial-section{margin-bottom:40px}
+.tutorial-header{display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:10px;border-bottom:1px solid var(--border)}
+.tutorial-icon{font-size:20px;color:var(--red)}
+.tutorial-title{font-size:13px;color:var(--bright);letter-spacing:.08em;text-transform:uppercase}
+.tutorial-sub{font-size:10px;color:var(--text2);letter-spacing:.1em;margin-top:2px}
+
+.step-list{display:flex;flex-direction:column;gap:12px}
+.step{display:flex;gap:12px;padding:14px;border:1px solid var(--border);background:var(--surface)}
+.step:hover{border-color:var(--border2)}
+.step-num{font-family:var(--serif);font-size:18px;color:var(--red);width:24px;flex-shrink:0;line-height:1}
+.step-content{flex:1}
+.step-title{font-size:12px;color:var(--bright);margin-bottom:4px}
+.step-desc{font-size:11px;color:var(--text2);line-height:1.6}
+.step-tip{font-size:10px;color:var(--text3);margin-top:6px;padding-top:6px;border-top:1px solid var(--border);letter-spacing:.05em}
+.step-code{background:var(--bg);border:1px solid var(--border2);padding:6px 10px;font-size:10px;color:var(--bright);margin-top:6px;letter-spacing:.06em}
+
+/* FEATURE GRID */
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:16px}
+.feature-card{border:1px solid var(--border);padding:14px;background:var(--surface)}
+.feature-card-title{font-size:11px;color:var(--bright);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+.feature-icon{color:var(--red);font-size:14px}
+.feature-card-desc{font-size:10px;color:var(--text2);line-height:1.6;letter-spacing:.04em}
+
+/* PLATFORM TABS */
+.platform-tabs{display:flex;gap:0;margin-bottom:16px}
+.platform-tab{font-size:9px;letter-spacing:.12em;padding:6px 14px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;text-transform:uppercase;transition:all .1s}
+.platform-tab.active{background:var(--red2);border-color:var(--red2);color:var(--white)}
+.platform-content{display:none}.platform-content.active{display:block}
+
+/* DIVIDER */
+.section-divider{border:none;border-top:1px solid var(--border);margin:40px 0}
+
+/* FAQ */
+.faq-item{border:1px solid var(--border);margin-bottom:8px}
+.faq-q{padding:12px 16px;font-size:11px;color:var(--bright);cursor:pointer;display:flex;justify-content:space-between;align-items:center;letter-spacing:.04em}
+.faq-q:hover{background:rgba(204,27,27,.03)}
+.faq-arrow{color:var(--red);font-size:12px;transition:transform .2s}
+.faq-a{padding:0 16px;max-height:0;overflow:hidden;transition:max-height .3s,padding .3s;font-size:11px;color:var(--text2);line-height:1.7;letter-spacing:.04em}
+.faq-item.open .faq-a{max-height:200px;padding:12px 16px}
+.faq-item.open .faq-arrow{transform:rotate(90deg)}
+
+@media(max-width:600px){
+  .hero-title{font-size:28px}
+  .main{padding:24px 16px 60px}
+  .feature-grid{grid-template-columns:1fr}
+  .topbar{padding:0 16px}
+}
+</style>
+</head>
+<body>
+<div id="toast-container"></div>
+
+<div class="topbar">
+  <a class="topbar-logo" href="/">Clinqies</a>
+  <div class="topbar-nav">
+    <a href="/">dashboard</a>
+    <a href="/setup">setup</a>
+    <a href="https://github.com/mcrsft/Clinqies-xyz" target="_blank">github</a>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="hero-content">
+    <div class="hero-title">setup guide</div>
+    <div class="hero-sub">get clinqies.xyz working with sharex in under 2 minutes</div>
+    <div class="hero-actions">
+      <a href="https://github.com/ShareX/ShareX/releases/latest" target="_blank" class="btn">&#8681; download sharex</a>
+      <a href="#quickstart" class="btn btn-red">&#9658; setup guide</a>
+    </div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- AUTH GATE -->
+  <div class="auth-gate" id="auth-gate">
+    <div class="auth-gate-title">log in to get your personal setup links</div>
+    <div class="auth-gate-body">your sharex config is pre-loaded with your api key — log in below to generate it.</div>
+    <div class="login-inline">
+      <input type="text" id="l-user" placeholder="username" spellcheck="false" autocomplete="username">
+      <input type="password" id="l-pass" placeholder="password" autocomplete="current-password">
+      <button class="btn btn-sm btn-red" onclick="doLogin()">login</button>
+    </div>
+    <div class="err" id="l-err"></div>
+  </div>
+
+  <!-- LOGGED IN QUICK START -->
+  <div class="quickstart hidden" id="quickstart">
+    <div class="qs-title">&#9658; quick start — you're logged in as <span id="qs-username" style="color:var(--bright)"></span></div>
+    <div class="qs-steps">
+      <div class="qs-step">
+        <div class="qs-num">1</div>
+        <div class="qs-body">
+          <div class="qs-step-title">install ShareX</div>
+          <div class="qs-step-desc">download and install ShareX from the official GitHub releases page.</div>
+          <div class="qs-action">
+            <a href="https://github.com/ShareX/ShareX/releases/latest" target="_blank" class="btn btn-sm">&#8681; download sharex</a>
+          </div>
+        </div>
+      </div>
+      <div class="qs-step">
+        <div class="qs-num">2</div>
+        <div class="qs-body">
+          <div class="qs-step-title">download your ShareX config</div>
+          <div class="qs-step-desc">download your personal <b style="color:var(--bright)">.sxcu</b> config file — it has your API key pre-loaded, no manual entry needed.</div>
+          <div class="qs-action">
+            <button class="btn btn-sm btn-red" onclick="downloadSxcu()">&#8681; download .sxcu config</button>
+          </div>
+          <div class="import-box">
+            <div class="import-box-title">how to import</div>
+            <div class="step-code" style="margin-bottom:8px">
+              1. open ShareX<br>
+              2. go to Destinations → Custom uploader settings<br>
+              3. click Import → From file<br>
+              4. select the downloaded .sxcu file<br>
+              5. click Yes to confirm
+            </div>
+            <div class="import-note">the config is tied to your account. if you regenerate your API key, download a fresh .sxcu and re-import it.</div>
+          </div>
+        </div>
+      </div>
+      <div class="qs-step">
+        <div class="qs-num">3</div>
+        <div class="qs-body">
+          <div class="qs-step-title">set as active uploader</div>
+          <div class="qs-step-desc">in ShareX go to <b style="color:var(--bright)">Destinations</b> and set the following to <b style="color:var(--bright)">Custom image/file uploader</b>:</div>
+          <div class="step-code">Destinations → Image uploader → Custom image uploader<br>Destinations → File uploader → Custom file uploader<br>Destinations → Text uploader → Custom text uploader</div>
+        </div>
+      </div>
+      <div class="qs-step">
+        <div class="qs-num">4</div>
+        <div class="qs-body">
+          <div class="qs-step-title">take a screenshot</div>
+          <div class="qs-step-desc">press your ShareX capture hotkey (default <b style="color:var(--bright)">Print Screen</b>) — the URL will be automatically copied to your clipboard.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- FULL TUTORIAL -->
+  <div class="tutorial-section">
+    <div class="tutorial-header">
+      <div class="tutorial-icon">&#9776;</div>
+      <div>
+        <div class="tutorial-title">full setup tutorial</div>
+        <div class="tutorial-sub">step by step for windows · sharex</div>
+      </div>
+    </div>
+
+    <div class="platform-tabs">
+      <div class="platform-tab active" onclick="switchPlatform('windows')">windows</div>
+      <div class="platform-tab" onclick="switchPlatform('linux')">linux / mac</div>
+    </div>
+
+    <div class="platform-content active" id="platform-windows">
+      <div class="step-list">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">download and install ShareX</div>
+            <div class="step-desc">go to the official ShareX GitHub page and download the latest installer. run the .exe and follow the installation wizard.</div>
+            <div style="margin-top:8px"><a href="https://github.com/ShareX/ShareX/releases/latest" target="_blank" class="btn btn-sm">github.com/ShareX/ShareX/releases/latest</a></div>
+            <div class="step-tip">ShareX is free and open source. always download from the official GitHub, not third party sites.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">import your clinqies config</div>
+            <div class="step-desc">with ShareX open, click the auto-import button in the quick start section above (you need to be logged in). ShareX will open a dialog asking to confirm the import — click yes.</div>
+            <div class="step-desc" style="margin-top:8px">if auto-import doesn't work, download the .sxcu file manually and import it:</div>
+            <div class="step-code">ShareX → Destinations → Custom uploader settings → Import → From file → select the .sxcu file</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">verify the config loaded</div>
+            <div class="step-desc">go to <b style="color:var(--bright)">Destinations → Custom uploader settings</b>. you should see <b style="color:var(--bright)">clinqies.xyz</b> in the uploaders list with your API key in the headers section.</div>
+            <div class="step-tip">the URL field should show <span style="color:var(--bright)">{json:url}</span> — if it shows $json:url$ change it to curly braces.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">set clinqies as your active uploader</div>
+            <div class="step-desc">in ShareX go to Destinations and change the following:</div>
+            <div class="step-code">Image uploader → Custom image uploader<br>File uploader → Custom file uploader<br>Text uploader → Custom text uploader</div>
+            <div class="step-desc" style="margin-top:8px">make sure clinqies.xyz is selected in each dropdown in the custom uploader settings.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">5</div>
+          <div class="step-content">
+            <div class="step-title">test it</div>
+            <div class="step-desc">in the custom uploader settings window, click the <b style="color:var(--bright)">Test</b> button next to image uploader. you should see a 200 OK response and a URL in the result field.</div>
+            <div class="step-tip">after a successful test, take a screenshot with Print Screen — the URL is automatically copied to your clipboard and the file appears in your clinqies dashboard.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">6</div>
+          <div class="step-content">
+            <div class="step-title">optional — configure hotkeys</div>
+            <div class="step-desc">go to <b style="color:var(--bright)">Hotkey settings</b> to customize your capture shortcuts. recommended setup:</div>
+            <div class="step-code">Print Screen → Capture region → upload<br>Ctrl+Print Screen → Capture fullscreen → upload<br>Ctrl+Shift+U → Upload file → upload</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="platform-content" id="platform-linux">
+      <div class="step-list">
+        <div class="step">
+          <div class="step-num">1</div>
+          <div class="step-content">
+            <div class="step-title">download the shell upload script</div>
+            <div class="step-desc">log in to your clinqies dashboard, go to Settings → ShareX / API → download shell script. this gives you a pre-configured bash script with your API key.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <div class="step-content">
+            <div class="step-title">install and configure</div>
+            <div class="step-desc">move the script to your PATH and make it executable:</div>
+            <div class="step-code">chmod +x clinqies-upload.sh<br>sudo mv clinqies-upload.sh /usr/local/bin/clinqies</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <div class="step-content">
+            <div class="step-title">use with flameshot</div>
+            <div class="step-desc">configure flameshot to pipe screenshots through the script:</div>
+            <div class="step-code">flameshot gui --raw | clinqies /dev/stdin</div>
+            <div class="step-desc" style="margin-top:8px">or upload any file directly:</div>
+            <div class="step-code">clinqies /path/to/file.png</div>
+            <div class="step-tip">requires curl, python3, and xclip (or pbcopy on mac) for clipboard support.</div>
+          </div>
+        </div>
+        <div class="step">
+          <div class="step-num">4</div>
+          <div class="step-content">
+            <div class="step-title">bind to a hotkey</div>
+            <div class="step-desc">add a keyboard shortcut in your desktop environment settings pointing to:</div>
+            <div class="step-code">flameshot gui --raw | clinqies /dev/stdin</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- FEATURES -->
+  <div class="tutorial-section">
+    <div class="tutorial-header">
+      <div class="tutorial-icon">&#9881;</div>
+      <div>
+        <div class="tutorial-title">features</div>
+        <div class="tutorial-sub">what you can do with clinqies</div>
+      </div>
+    </div>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-card-title"><span class="feature-icon">&#8679;</span> file uploads</div>
+        <div class="feature-card-desc">upload files up to 10GB via ShareX, drag and drop, or ctrl+v to paste images directly. random filenames keep your uploads private.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title"><span class="feature-icon">&#128274;</span> password protection</div>
+        <div class="feature-card-desc">set a password on any upload. viewers see a password gate before accessing the file. set it during upload in the dashboard.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title"><span class="feature-icon">&#9135;</span> url shortener</div>
+        <div class="feature-card-desc">shorten any URL to a clinqies.xyz/s/code link. tracks click counts and supports expiry.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title"><span class="feature-icon">&#9776;</span> file gallery</div>
+        <div class="feature-card-desc">select multiple files and create a shareable gallery link. share a set of images or files with one URL.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title"><span class="feature-icon">&#9201;</span> file expiry</div>
+        <div class="feature-card-desc">set files to auto-delete after 1 hour, 24 hours, 7 days, or 30 days. expired files are automatically removed from disk.</div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-card-title"><span class="feature-icon">&#9112;</span> embed codes</div>
+        <div class="feature-card-desc">after uploading, get instant embed codes in direct URL, HTML img tag, markdown, and bbcode formats.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- FAQ -->
+  <div class="tutorial-section">
+    <div class="tutorial-header">
+      <div class="tutorial-icon">?</div>
+      <div>
+        <div class="tutorial-title">frequently asked questions</div>
+      </div>
+    </div>
+    <div id="faq">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">ShareX is copying $json:url$ instead of the real URL <span class="faq-arrow">&#9658;</span></div>
+        <div class="faq-a">go to Destinations → Custom uploader settings → click your clinqies.xyz uploader → find the URL field and make sure it says <b>{json:url}</b> with curly braces, not dollar signs. retype it if needed. this is a ShareX version quirk.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">the auto-import link doesn't open ShareX <span class="faq-arrow">&#9658;</span></div>
+        <div class="faq-a">ShareX must be installed and the sharex:// URL handler must be registered. try running ShareX once first, then click the link again. if it still doesn't work, download the .sxcu file and import it manually via Destinations → Custom uploader settings → Import → From file.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">how do I change my upload quota? <span class="faq-arrow">&#9658;</span></div>
+        <div class="faq-a">quotas are set by the server admin. contact whoever runs your clinqies instance and ask them to adjust your quota in the admin panel.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">can I use clinqies without ShareX? <span class="faq-arrow">&#9658;</span></div>
+        <div class="faq-a">yes — log in to the dashboard and upload files directly via drag and drop, the file picker, or ctrl+v to paste images from clipboard. the dashboard gives you full file management.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">how do I upload from the command line? <span class="faq-arrow">&#9658;</span></div>
+        <div class="faq-a">download the shell script from Settings → ShareX / API → shell script. it uses curl under the hood and copies the URL to your clipboard automatically. works on linux and mac.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">my API key stopped working <span class="faq-arrow">&#9658;</span></div>
+        <div class="faq-a">if you regenerated your API key in Settings, you need to re-download the .sxcu config and re-import it in ShareX. the old key is immediately invalidated when you regenerate.</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+let currentUser = null;
+let importUrl = '';
+
+function toast(msg, type='info'){const el=document.createElement('div');el.className=`toast ${type}`;el.textContent=msg;document.getElementById('toast-container').appendChild(el);requestAnimationFrame(()=>el.classList.add('show'));setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),300)},3000);}
+
+async function api(method, path, body){
+  const opts={method,credentials:'include',headers:{}};
+  if(body){opts.headers['Content-Type']='application/json';opts.body=JSON.stringify(body);}
+  const r=await fetch('/api'+path,opts);
+  const data=await r.json().catch(()=>({}));
+  if(!r.ok)throw new Error(data.error||'request failed');
+  return data;
+}
+
+async function doLogin(){
+  const username=document.getElementById('l-user').value.trim();
+  const password=document.getElementById('l-pass').value;
+  document.getElementById('l-err').textContent='';
+  try{
+    const res=await api('POST','/auth/login',{username,password});
+    if(res.requires2fa){document.getElementById('l-err').textContent='2fa not supported on this page — log in from the dashboard';return;}
+    currentUser=res.user;
+    showLoggedIn();
+  }catch(e){document.getElementById('l-err').textContent=e.message;}
+}
+
+document.getElementById('l-pass').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+document.getElementById('l-user').addEventListener('keydown',e=>{if(e.key==='Enter')doLogin();});
+
+function showLoggedIn(){
+  document.getElementById('auth-gate').classList.add('hidden');
+  document.getElementById('quickstart').classList.remove('hidden');
+  document.getElementById('qs-username').textContent=currentUser.username;
+
+  const base='https://clinqies.xyz';
+  const configUrl=`${base}/api/config/sharex`;
+  importUrl=`sharex://import?url=${encodeURIComponent(configUrl)}`;
+
+  document.getElementById('import-url-display').textContent=importUrl;
+  document.getElementById('import-url-link').href=importUrl;
+  document.getElementById('auto-import-btn').href=importUrl;
+}
+
+function copyImportUrl(){
+  navigator.clipboard.writeText(importUrl).then(()=>toast('import link copied','info')).catch(()=>{
+    const el=document.createElement('textarea');el.value=importUrl;document.body.appendChild(el);el.select();document.execCommand('copy');el.remove();toast('copied','info');
+  });
+}
+
+function downloadSxcu(){window.location.href='/api/config/sharex';}
+
+// Check existing session
+api('GET','/auth/me').then(user=>{currentUser=user;showLoggedIn();}).catch(()=>{});
+
+// Platform tabs
+function switchPlatform(p){
+  document.querySelectorAll('.platform-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.platform-content').forEach(c=>c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('platform-'+p).classList.add('active');
+}
+
+// FAQ
+function toggleFaq(el){
+  const item=el.parentElement;
+  item.classList.toggle('open');
+}
+</script>
+</body>
+</html>
