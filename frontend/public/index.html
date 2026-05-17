@@ -18,24 +18,21 @@
 }
 body{background:var(--bg);color:var(--text);font-family:var(--mono);font-size:13px;min-height:100vh;letter-spacing:.03em}
 input,button,select,textarea{font-family:var(--mono);font-size:13px;outline:none}
-button{cursor:pointer}
-.hidden{display:none!important}
+button{cursor:pointer}.hidden{display:none!important}
 
 /* TOAST */
-#toast-container{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px}
-.toast{background:var(--surface2);border-left:3px solid var(--red);padding:10px 16px;font-size:11px;letter-spacing:.08em;opacity:0;transform:translateX(20px);transition:all .2s;max-width:300px}
+#toast-container{position:fixed;bottom:20px;right:20px;z-index:9999;display:flex;flex-direction:column;gap:8px;max-width:320px}
+.toast{background:var(--surface2);border-left:3px solid var(--red);padding:10px 16px;font-size:11px;letter-spacing:.08em;opacity:0;transform:translateX(20px);transition:all .2s}
 .toast.show{opacity:1;transform:translateX(0)}
 .toast.success{border-color:#883333;color:#dd8888}
 .toast.error{border-color:#660000;color:#ff6666}
 .toast.info{border-color:var(--red);color:var(--text)}
 
-/* PAGES */
-.page{display:none;min-height:100vh}
-.page.active{display:flex;flex-direction:column}
+.page{display:none;min-height:100vh}.page.active{display:flex;flex-direction:column}
 
 /* MODAL */
-.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;display:flex;align-items:center;justify-content:center}
-.modal{background:var(--surface);border:1px solid var(--border2);border-top:3px solid var(--red);padding:24px;width:100%;max-width:480px;max-height:80vh;overflow-y:auto}
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:1000;display:flex;align-items:center;justify-content:center;padding:20px}
+.modal{background:var(--surface);border:1px solid var(--border2);border-top:3px solid var(--red);padding:24px;width:100%;max-width:520px;max-height:85vh;overflow-y:auto}
 .modal-title{font-size:11px;letter-spacing:.2em;color:var(--text2);text-transform:uppercase;margin-bottom:16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
 .modal-actions{display:flex;gap:8px;margin-top:16px;justify-content:flex-end}
 
@@ -48,46 +45,54 @@ button{cursor:pointer}
 .logo-text{font-family:var(--serif);font-size:54px;font-weight:900;color:var(--white);letter-spacing:.04em;text-transform:uppercase;line-height:1;text-shadow:0 2px 20px rgba(0,0,0,.5)}
 .logo-rule{width:70px;height:2px;background:rgba(255,255,255,.35);margin:9px 0}
 .logo-tag{font-size:10px;color:rgba(255,255,255,.55);letter-spacing:.24em;text-transform:uppercase}
+.motd-banner{width:100%;background:rgba(204,27,27,.15);border:1px solid var(--red2);padding:10px 14px;font-size:11px;color:var(--text);letter-spacing:.06em;margin-bottom:14px;line-height:1.5}
 .login-box{width:100%;background:var(--surface);border:1px solid var(--border2);border-top:3px solid var(--red);padding:24px;display:flex;flex-direction:column;gap:14px}
 .field-label{font-size:9px;letter-spacing:.22em;color:var(--text2);text-transform:uppercase;margin-bottom:4px}
 .field-row{display:flex;align-items:center;gap:6px}
 .pw-toggle{display:flex;font-size:9px;color:var(--text2)}
 .pw-toggle span{border:1px solid var(--border2);padding:2px 5px;cursor:pointer;transition:all .1s}
 .pw-toggle span.on{background:var(--red2);color:var(--white);border-color:var(--red2)}
-input[type=text],input[type=password],input[type=email],input[type=number]{width:100%;background:var(--bg);border:1px solid var(--border2);color:var(--bright);padding:8px 10px;transition:border-color .15s;letter-spacing:.04em}
-input[type=text]:focus,input[type=password]:focus,input[type=email]:focus,input[type=number]:focus{border-color:var(--red)}
-.btn{background:transparent;border:1px solid var(--text2);color:var(--text);font-family:var(--mono);font-size:10px;letter-spacing:.2em;padding:10px 16px;text-transform:uppercase;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:8px}
+input[type=text],input[type=password],input[type=email],input[type=number],input[type=search]{width:100%;background:var(--bg);border:1px solid var(--border2);color:var(--bright);padding:8px 10px;transition:border-color .15s;letter-spacing:.04em}
+input:focus{border-color:var(--red)}
+textarea{width:100%;background:var(--bg);border:1px solid var(--border2);color:var(--bright);padding:8px 10px;resize:vertical;min-height:60px}
+textarea:focus{border-color:var(--red)}
+.btn{background:transparent;border:1px solid var(--text2);color:var(--text);font-family:var(--mono);font-size:10px;letter-spacing:.2em;padding:10px 16px;text-transform:uppercase;transition:all .15s;display:inline-flex;align-items:center;justify-content:center;gap:8px}
 .btn:hover{background:rgba(204,27,27,.08);border-color:var(--red);color:var(--bright)}
-.btn:active{opacity:.7}
+.btn:active{opacity:.7}.btn:disabled{opacity:.4;cursor:not-allowed}
 .btn-full{width:100%}
 .btn-red{background:var(--red);border-color:var(--red);color:var(--white)}
 .btn-red:hover{background:var(--red3);border-color:var(--red3);color:var(--white)}
 .btn-sm{font-size:9px;padding:5px 10px;letter-spacing:.12em}
 .btn-danger{border-color:var(--red2);color:#cc6666}
 .btn-danger:hover{background:rgba(150,20,20,.15);border-color:var(--red);color:#ff8888}
-.btn:disabled{opacity:.4;cursor:not-allowed}
 .divider{text-align:center;font-size:10px;color:var(--text3);letter-spacing:.1em;position:relative}
 .divider::before,.divider::after{content:'';position:absolute;top:50%;width:40%;height:1px;background:var(--border)}
 .divider::before{left:0}.divider::after{right:0}
 .login-links{display:flex;justify-content:space-between;font-size:10px;letter-spacing:.08em}
 .login-links a{color:var(--text2);text-decoration:underline;text-underline-offset:2px;cursor:pointer}
 .login-links a:hover{color:var(--red)}
-.footer-nav{margin-top:22px;display:flex;gap:18px;font-size:10px;letter-spacing:.1em;color:var(--text3)}
+.footer-nav{margin-top:22px;display:flex;gap:18px;font-size:10px;letter-spacing:.1em;color:var(--text3);flex-wrap:wrap;justify-content:center}
 .footer-nav a{color:var(--text3);transition:color .1s;cursor:pointer}.footer-nav a:hover{color:var(--red)}
 .err{font-size:11px;color:#cc4444;letter-spacing:.06em;text-align:center;min-height:15px}
 
 /* DASHBOARD */
 #page-dashboard{flex-direction:column}
-.topbar{border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;background:var(--surface);height:46px}
-.topbar-logo{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--white);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:10px}
+.topbar{border-bottom:1px solid var(--border);padding:0 20px;display:flex;align-items:center;justify-content:space-between;background:var(--surface);height:46px;gap:12px}
+.topbar-logo{font-family:var(--serif);font-size:20px;font-weight:900;color:var(--white);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:10px;flex-shrink:0}
 .topbar-logo::before{content:'';display:inline-block;width:4px;height:22px;background:var(--red)}
 .topbar-logo em{font-style:italic;font-family:var(--mono);font-size:10px;color:var(--text2);font-weight:400;letter-spacing:.12em}
-.topbar-right{display:flex;align-items:center;gap:20px;font-size:10px}
-.topbar-user{color:var(--text2)}.topbar-user b{color:var(--bright)}
-.topbar-nav a{color:var(--text2);font-size:9px;letter-spacing:.15em;text-transform:uppercase;margin-left:14px;transition:color .1s;padding:4px 0;border-bottom:1px solid transparent;cursor:pointer}
+.topbar-right{display:flex;align-items:center;gap:16px;font-size:10px;overflow:hidden}
+.topbar-user{color:var(--text2);white-space:nowrap}.topbar-user b{color:var(--bright)}
+.topbar-nav{display:flex;flex-wrap:wrap}
+.topbar-nav a{color:var(--text2);font-size:9px;letter-spacing:.12em;text-transform:uppercase;margin-left:12px;transition:color .1s;padding:4px 0;border-bottom:1px solid transparent;cursor:pointer;white-space:nowrap}
 .topbar-nav a:hover{color:var(--red);border-bottom-color:var(--red)}
-.dash-body{flex:1;display:grid;grid-template-columns:200px 1fr}
-.sidebar{border-right:1px solid var(--border);padding:16px 0;display:flex;flex-direction:column;background:var(--surface)}
+
+/* Hamburger for mobile */
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:20px;height:2px;background:var(--text)}
+
+.dash-body{flex:1;display:grid;grid-template-columns:200px 1fr;min-height:0}
+.sidebar{border-right:1px solid var(--border);padding:16px 0;display:flex;flex-direction:column;background:var(--surface);overflow-y:auto}
 .sb-section{font-size:9px;letter-spacing:.2em;color:var(--text3);text-transform:uppercase;padding:14px 16px 6px}
 .sb-item{display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;font-size:11px;letter-spacing:.06em;color:var(--text2);border-left:3px solid transparent;transition:all .1s}
 .sb-item:hover{color:var(--text);background:rgba(204,27,27,.05);border-left-color:var(--red2)}
@@ -95,63 +100,65 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus,input[
 .sb-icon{width:13px;text-align:center;font-size:11px;opacity:.5}
 .sb-item.active .sb-icon{opacity:1;color:var(--red)}
 .sb-quota{margin-top:auto;padding:14px 16px;border-top:1px solid var(--border);font-size:10px;color:var(--text2)}
-.quota-bar{margin-top:7px;height:2px;background:var(--border2);position:relative;overflow:hidden}
+.quota-row{display:flex;justify-content:space-between;margin-bottom:4px;font-size:10px}
+.quota-bar{height:3px;background:var(--border2);position:relative;overflow:hidden;margin-bottom:3px;border-radius:1px}
 .quota-fill{position:absolute;left:0;top:0;height:100%;background:var(--red);transition:width .4s}
-.quota-nums{display:flex;justify-content:space-between;margin-top:5px;font-size:9px;color:var(--text3)}
-.content{padding:24px;overflow-y:auto;flex:1}
+.quota-fill.warn{background:#cc8800}
+.quota-fill.danger{background:var(--red3)}
+.quota-nums{display:flex;justify-content:space-between;font-size:9px;color:var(--text3)}
+
+.content{padding:22px;overflow-y:auto;flex:1}
 .section{display:none}.section.active{display:block}
-.sec-title{font-size:9px;letter-spacing:.22em;color:var(--text2);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.sec-title-actions{display:flex;gap:8px}
+.sec-title{font-size:9px;letter-spacing:.22em;color:var(--text2);text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;padding-bottom:8px;border-bottom:1px solid var(--border);flex-wrap:wrap;gap:8px}
+.sec-title-actions{display:flex;gap:8px;flex-wrap:wrap}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border);border:1px solid var(--border);margin-bottom:22px}
 .stat{background:var(--surface);padding:14px 16px}
 .stat-l{font-size:9px;letter-spacing:.18em;color:var(--text2);text-transform:uppercase;margin-bottom:6px}
 .stat-v{font-size:20px;color:var(--bright);letter-spacing:.03em;font-family:var(--serif)}
 
 /* Upload */
+.upload-options{display:flex;gap:12px;margin-bottom:14px;align-items:center;flex-wrap:wrap;font-size:10px;color:var(--text2)}
+.upload-options label{display:flex;align-items:center;gap:6px}
+.upload-options select{background:var(--bg);border:1px solid var(--border2);color:var(--text2);padding:4px 8px;font-size:11px}
 .upload-zone{border:1px dashed var(--border2);padding:36px 24px;text-align:center;cursor:pointer;transition:all .15s;margin-bottom:16px;position:relative}
-.upload-zone:hover,.upload-zone.over,.upload-zone.paste-ready{border-color:var(--red);background:rgba(204,27,27,.03)}
+.upload-zone:hover,.upload-zone.over{border-color:var(--red);background:rgba(204,27,27,.03)}
 .upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
 .uz-icon{font-size:24px;color:var(--red);margin-bottom:8px;opacity:.7}
 .uz-text{font-size:12px;color:var(--text2);letter-spacing:.08em}
 .uz-text b{color:var(--bright)}
-.uz-sub{font-size:10px;color:var(--text3);margin-top:5px}
-.uz-paste-hint{font-size:10px;color:var(--text3);margin-top:4px;letter-spacing:.06em}
-
-.upload-options{display:flex;gap:12px;margin-bottom:16px;align-items:center;flex-wrap:wrap}
-.upload-options label{font-size:10px;color:var(--text2);letter-spacing:.08em}
-.upload-options select,.upload-options input[type=number]{width:auto;padding:4px 8px;font-size:11px}
-
+.uz-sub{font-size:10px;color:var(--text3);margin-top:4px}
 .progress-bar{height:2px;background:var(--border2);position:relative;overflow:hidden;margin-bottom:4px}
 .progress-fill{position:absolute;left:0;top:0;height:100%;background:var(--red);width:0%;transition:width .2s}
-.progress-label{font-size:10px;color:var(--text2);letter-spacing:.06em}
-#upload-progress{margin-bottom:16px;display:none}
 #upload-result{border:1px solid var(--border);border-left:3px solid var(--red);padding:16px;margin-bottom:16px}
-
-/* Embed codes */
-.embed-tabs{display:flex;gap:0;margin-bottom:8px}
+.embed-tabs{display:flex;gap:0;margin-bottom:6px}
 .embed-tab{font-size:9px;letter-spacing:.1em;padding:4px 10px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;text-transform:uppercase;transition:all .1s}
 .embed-tab.active{background:var(--red2);border-color:var(--red2);color:var(--white)}
-.embed-code{background:var(--bg);border:1px solid var(--border2);padding:8px 10px;font-size:11px;color:var(--text);word-break:break-all;white-space:pre-wrap;letter-spacing:.02em;line-height:1.5}
+.embed-code{background:var(--bg);border:1px solid var(--border2);padding:8px 10px;font-size:11px;color:var(--text);word-break:break-all;white-space:pre-wrap;line-height:1.5}
 
 /* File table */
+.search-bar{display:flex;gap:8px;margin-bottom:14px}
+.search-bar input{flex:1}
 .file-tbl{width:100%;border-collapse:collapse}
-.file-tbl th{font-size:9px;letter-spacing:.15em;color:var(--text2);text-transform:uppercase;text-align:left;padding:6px 10px;border-bottom:1px solid var(--border);font-weight:400}
-.file-tbl th.check-col{width:32px}
-.file-tbl td{padding:8px 10px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:middle}
+.file-tbl th{font-size:9px;letter-spacing:.15em;color:var(--text2);text-transform:uppercase;text-align:left;padding:6px 8px;border-bottom:1px solid var(--border);font-weight:400;white-space:nowrap}
+.file-tbl td{padding:8px 8px;border-bottom:1px solid var(--border);font-size:12px;vertical-align:middle}
 .file-tbl tr:hover td{background:rgba(204,27,27,.03)}
 .file-tbl tr:last-child td{border-bottom:none}
 .file-tbl tr.selected td{background:rgba(204,27,27,.06)}
-.fname{color:var(--bright);cursor:pointer}.fname:hover{color:var(--red)}
-.fext{display:inline-block;font-size:9px;letter-spacing:.1em;padding:1px 5px;border:1px solid var(--red2);color:var(--red);margin-right:6px;text-transform:uppercase}
-.dim{color:var(--text2);font-size:11px}
-.expiry-badge{font-size:9px;color:#cc8800;border:1px solid #554400;padding:1px 5px;margin-left:4px}
-.file-acts{display:flex;gap:6px;justify-content:flex-end}
-.file-acts button{background:none;border:1px solid var(--border);color:var(--text2);font-family:var(--mono);font-size:9px;letter-spacing:.1em;padding:3px 8px;cursor:pointer;text-transform:uppercase;transition:all .1s}
+.thumb{width:32px;height:32px;object-fit:cover;border:1px solid var(--border2);display:block}
+.thumb-placeholder{width:32px;height:32px;background:var(--border);display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--text3)}
+.fname{color:var(--bright);cursor:pointer;word-break:break-all}.fname:hover{color:var(--red)}
+.fext{display:inline-block;font-size:9px;letter-spacing:.1em;padding:1px 4px;border:1px solid var(--red2);color:var(--red);margin-right:5px;text-transform:uppercase;flex-shrink:0}
+.dim{color:var(--text2);font-size:11px;white-space:nowrap}
+.badge{font-size:9px;padding:1px 5px;border:1px solid;margin-left:4px;display:inline-block}
+.badge-exp{border-color:#554400;color:#cc8800}
+.badge-pw{border-color:#224422;color:#66aa66}
+.file-acts{display:flex;gap:5px;justify-content:flex-end;flex-wrap:wrap}
+.file-acts button{background:none;border:1px solid var(--border);color:var(--text2);font-family:var(--mono);font-size:9px;letter-spacing:.08em;padding:3px 7px;cursor:pointer;text-transform:uppercase;transition:all .1s;white-space:nowrap}
 .file-acts button:hover{border-color:var(--border2);color:var(--text)}
 .file-acts button.del:hover{border-color:var(--red);color:var(--red)}
 .empty-state{text-align:center;padding:40px;color:var(--text3);font-size:11px;letter-spacing:.12em}
-.pagination{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:10px;color:var(--text2)}
-.bulk-bar{display:none;align-items:center;gap:10px;padding:10px 12px;background:rgba(204,27,27,.08);border:1px solid var(--red2);margin-bottom:12px;font-size:11px;color:var(--text2)}
+.pagination{display:flex;align-items:center;gap:10px;margin-top:16px;font-size:10px;color:var(--text2);flex-wrap:wrap}
+.bulk-bar{display:none;align-items:center;gap:10px;padding:10px 12px;background:rgba(204,27,27,.08);border:1px solid var(--red2);margin-bottom:12px;font-size:11px;color:var(--text2);flex-wrap:wrap}
 .bulk-bar.show{display:flex}
 
 /* Settings */
@@ -160,7 +167,7 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus,input[
 .sg-title{font-size:9px;letter-spacing:.18em;color:var(--text2);text-transform:uppercase}
 .sg-body{padding:16px;display:flex;flex-direction:column;gap:12px}
 .sg-row{display:flex;align-items:center;gap:12px;font-size:11px;color:var(--text);flex-wrap:wrap}
-.sg-label{width:120px;color:var(--text2);font-size:10px;letter-spacing:.08em;flex-shrink:0}
+.sg-label{width:130px;color:var(--text2);font-size:10px;letter-spacing:.08em;flex-shrink:0}
 .code-pill{background:var(--bg);border:1px solid var(--border2);padding:6px 10px;font-size:11px;color:var(--bright);letter-spacing:.06em;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;min-width:0}
 .qr-wrap{display:none;margin-top:12px}
 .qr-wrap img{width:160px;height:160px;border:1px solid var(--border2)}
@@ -168,11 +175,31 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus,input[
 .totp-input-row{display:flex;gap:8px;margin-top:8px}
 .totp-input-row input{width:130px;text-align:center;letter-spacing:.2em;font-size:16px}
 
+/* Storage chart */
+.storage-chart{display:flex;flex-direction:column;gap:8px;margin-top:12px}
+.chart-row{display:flex;align-items:center;gap:10px;font-size:11px}
+.chart-name{width:100px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex-shrink:0}
+.chart-bar-wrap{flex:1;height:14px;background:var(--border);position:relative;overflow:hidden}
+.chart-bar-fill{position:absolute;left:0;top:0;height:100%;background:var(--red);transition:width .6s}
+.chart-bar-fill.over{background:#cc4400}
+.chart-label{width:80px;color:var(--text2);font-size:10px;text-align:right;flex-shrink:0}
+
 /* Shortener */
 .short-tbl{width:100%;border-collapse:collapse;font-size:11px}
 .short-tbl th{font-size:9px;letter-spacing:.15em;color:var(--text2);text-transform:uppercase;text-align:left;padding:6px 9px;border-bottom:1px solid var(--border);font-weight:400}
 .short-tbl td{padding:7px 9px;border-bottom:1px solid var(--border);vertical-align:middle}
 .short-tbl tr:last-child td{border-bottom:none}
+
+/* Audit log */
+.audit-tbl{width:100%;border-collapse:collapse;font-size:11px}
+.audit-tbl th{font-size:9px;letter-spacing:.15em;color:var(--text2);text-transform:uppercase;text-align:left;padding:6px 9px;border-bottom:1px solid var(--border);font-weight:400}
+.audit-tbl td{padding:6px 9px;border-bottom:1px solid var(--border);vertical-align:middle}
+.audit-tbl tr:last-child td{border-bottom:none}
+.action-badge{font-size:9px;padding:1px 6px;border:1px solid var(--border2);color:var(--text2);text-transform:uppercase;letter-spacing:.08em}
+.action-badge.upload{border-color:#224422;color:#66aa66}
+.action-badge.delete,.action-badge.bulk_delete{border-color:var(--red2);color:var(--red)}
+.action-badge.login{border-color:#222244;color:#6666aa}
+.action-badge.login_fail{border-color:#443322;color:#aa7744}
 
 /* Admin */
 .admin-tbl{width:100%;border-collapse:collapse;font-size:11px}
@@ -182,28 +209,64 @@ input[type=text]:focus,input[type=password]:focus,input[type=email]:focus,input[
 .role-badge{font-size:9px;padding:1px 6px;border:1px solid;text-transform:uppercase;letter-spacing:.1em}
 .role-badge.admin{border-color:var(--red2);color:var(--red)}
 .role-badge.user{border-color:var(--border2);color:var(--text2)}
+.suspended-badge{font-size:9px;padding:1px 6px;border:1px solid #443300;color:#aa6600;text-transform:uppercase;margin-left:4px}
 .invite-code{font-size:11px;color:var(--bright);letter-spacing:.1em;background:var(--bg);border:1px solid var(--border);padding:3px 8px;display:inline-block}
 .invite-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-
 input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:pointer}
+
+/* FILE VIEWER PAGE */
+#page-viewer{align-items:center;justify-content:flex-start;flex-direction:column;background:var(--bg);padding:40px 20px;min-height:100vh}
+.viewer-box{width:100%;max-width:700px}
+.viewer-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.viewer-logo{font-family:var(--serif);font-size:22px;font-weight:900;color:var(--white);text-transform:uppercase;letter-spacing:.06em;display:flex;align-items:center;gap:8px;text-decoration:none}
+.viewer-logo::before{content:'';display:inline-block;width:3px;height:20px;background:var(--red)}
+.viewer-meta{border:1px solid var(--border);border-top:2px solid var(--red);padding:16px;margin-bottom:16px}
+.viewer-filename{font-size:16px;color:var(--bright);margin-bottom:10px;word-break:break-all}
+.viewer-stats{display:flex;gap:20px;flex-wrap:wrap;font-size:10px;color:var(--text2);letter-spacing:.08em;margin-bottom:14px}
+.viewer-preview{margin-bottom:16px;text-align:center}
+.viewer-preview img{max-width:100%;max-height:500px;border:1px solid var(--border)}
+.viewer-preview video,.viewer-preview audio{width:100%;max-width:100%}
+.viewer-actions{display:flex;gap:8px;flex-wrap:wrap}
+.pw-gate{border:1px solid var(--border);padding:20px;text-align:center;margin-bottom:16px}
+.pw-gate-title{font-size:11px;color:var(--text2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:12px}
+.pw-gate-form{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.pw-gate-form input{width:200px}
+
+/* MOBILE */
+@media(max-width:700px){
+  .hamburger{display:flex}
+  .topbar-nav{display:none}
+  .topbar-nav.open{display:flex;position:fixed;top:46px;left:0;right:0;background:var(--surface);border-bottom:1px solid var(--border);padding:10px 16px;flex-direction:column;gap:0;z-index:100}
+  .topbar-nav.open a{margin-left:0;padding:10px 0;border-bottom:1px solid var(--border);border-bottom-color:transparent}
+  .topbar-logo em{display:none}
+  .topbar-user{display:none}
+  .dash-body{grid-template-columns:1fr}
+  .sidebar{display:none;position:fixed;top:46px;left:0;bottom:0;width:200px;z-index:99;border-right:1px solid var(--border)}
+  .sidebar.open{display:flex}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}
+  .file-tbl th:nth-child(4),.file-tbl td:nth-child(4),
+  .file-tbl th:nth-child(5),.file-tbl td:nth-child(5){display:none}
+}
+@media(max-width:480px){
+  .stats-grid{grid-template-columns:1fr 1fr}
+  .content{padding:14px}
+  .logo-text{font-size:40px}
+}
 </style>
 </head>
 <body>
 <div id="toast-container"></div>
-
-<!-- MODAL -->
-<div class="modal-overlay hidden" id="modal-overlay">
-  <div class="modal" id="modal-content"></div>
-</div>
+<div class="modal-overlay hidden" id="modal-overlay"><div class="modal" id="modal-content"></div></div>
 
 <!-- LOGIN -->
 <div id="page-login" class="page active">
   <div class="login-wrap">
     <div class="logo-area">
       <div class="logo-text">Clinqies</div>
-      <div class="logo-rule"></div>
+      <div class="logo-rule" style="width:70px;height:2px;background:rgba(255,255,255,.35);margin:9px 0"></div>
       <div class="logo-tag">secure file sharing</div>
     </div>
+    <div id="motd-banner" class="motd-banner hidden"></div>
     <div id="login-form" class="login-box">
       <div><div class="field-label">username</div><input type="text" id="l-user" autocomplete="username" spellcheck="false"></div>
       <div>
@@ -242,30 +305,36 @@ input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:point
 <!-- DASHBOARD -->
 <div id="page-dashboard" class="page">
   <div class="topbar">
-    <div class="topbar-logo">Clinqies <em>~secure file sharing~</em></div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <div class="hamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></div>
+      <div class="topbar-logo">Clinqies <em>~secure file sharing~</em></div>
+    </div>
     <div class="topbar-right">
       <div class="topbar-user">logged in as <b id="tb-username">—</b></div>
-      <div class="topbar-nav">
-        <a onclick="showSection('files')">files</a>
-        <a onclick="showSection('shortener')">shortener</a>
-        <a onclick="showSection('settings')">settings</a>
-        <a id="admin-link" class="hidden" onclick="showSection('admin')">admin</a>
+      <div class="topbar-nav" id="topbar-nav">
+        <a onclick="showSection('files');closeMobileMenu()">files</a>
+        <a onclick="showSection('shortener');closeMobileMenu()">shortener</a>
+        <a onclick="showSection('settings');closeMobileMenu()">settings</a>
+        <a id="admin-link" class="hidden" onclick="showSection('admin');closeMobileMenu()">admin</a>
         <a onclick="doLogout()">logout</a>
       </div>
     </div>
   </div>
   <div class="dash-body">
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
       <div class="sb-section">navigate</div>
-      <div class="sb-item active" onclick="showSection('upload')" id="sb-upload"><span class="sb-icon">&#8679;</span> upload</div>
-      <div class="sb-item" onclick="showSection('files')" id="sb-files"><span class="sb-icon">&#9776;</span> my files</div>
-      <div class="sb-item" onclick="showSection('shortener')" id="sb-shortener"><span class="sb-icon">&#9135;</span> shortener</div>
-      <div class="sb-item" onclick="showSection('settings')" id="sb-settings"><span class="sb-icon">&#9881;</span> settings</div>
-      <div class="sb-item hidden" onclick="showSection('admin')" id="sb-admin"><span class="sb-icon">&#9760;</span> admin</div>
+      <div class="sb-item active" onclick="showSection('upload');closeMobileMenu()" id="sb-upload"><span class="sb-icon">&#8679;</span> upload</div>
+      <div class="sb-item" onclick="showSection('files');closeMobileMenu()" id="sb-files"><span class="sb-icon">&#9776;</span> my files</div>
+      <div class="sb-item" onclick="showSection('shortener');closeMobileMenu()" id="sb-shortener"><span class="sb-icon">&#9135;</span> shortener</div>
+      <div class="sb-item" onclick="showSection('settings');closeMobileMenu()" id="sb-settings"><span class="sb-icon">&#9881;</span> settings</div>
+      <div class="sb-item hidden" onclick="showSection('admin');closeMobileMenu()" id="sb-admin"><span class="sb-icon">&#9760;</span> admin</div>
       <div class="sb-quota">
-        <div>server storage</div>
+        <div class="quota-row"><span>your quota</span><span id="quota-pct">0%</span></div>
         <div class="quota-bar"><div class="quota-fill" id="quota-fill" style="width:0%"></div></div>
-        <div class="quota-nums"><span id="quota-used">0 B</span><span id="quota-total">1 TB</span></div>
+        <div class="quota-nums"><span id="quota-used">0 B</span><span id="quota-total">2 GB</span></div>
+        <div class="quota-row" style="margin-top:8px"><span>server</span><span id="server-pct">0%</span></div>
+        <div class="quota-bar"><div class="quota-fill" id="server-fill" style="width:0%"></div></div>
+        <div class="quota-nums"><span id="server-used">0 B</span><span>1 TB</span></div>
       </div>
     </div>
     <div class="content">
@@ -277,12 +346,11 @@ input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:point
           <div class="stat"><div class="stat-l">files</div><div class="stat-v" id="s-files">—</div></div>
           <div class="stat"><div class="stat-l">total size</div><div class="stat-v" id="s-size">—</div></div>
           <div class="stat"><div class="stat-l">total views</div><div class="stat-v" id="s-views">—</div></div>
-          <div class="stat"><div class="stat-l">server used</div><div class="stat-v" id="s-server">—</div></div>
+          <div class="stat"><div class="stat-l">quota used</div><div class="stat-v" id="s-quota">—</div></div>
         </div>
-
         <div class="upload-options">
           <label>expiry:
-            <select id="expiry-select" style="margin-left:6px">
+            <select id="expiry-select">
               <option value="">never</option>
               <option value="1">1 hour</option>
               <option value="6">6 hours</option>
@@ -292,43 +360,44 @@ input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:point
               <option value="720">30 days</option>
             </select>
           </label>
+          <label>password:
+            <input type="password" id="file-password" placeholder="optional" style="width:130px;padding:4px 8px;font-size:11px">
+          </label>
         </div>
-
         <div class="upload-zone" id="upload-zone">
           <input type="file" id="file-input" onchange="handleFileSelect(this.files)">
           <div class="uz-icon">&#8679;</div>
           <div class="uz-text"><b>click to select</b> or drag and drop</div>
           <div class="uz-sub">max 50mb &middot; images &middot; video &middot; audio &middot; archives &middot; text</div>
-          <div class="uz-paste-hint">ctrl+v to paste image from clipboard</div>
+          <div class="uz-sub">ctrl+v to paste image from clipboard</div>
         </div>
-
         <div id="upload-progress" style="display:none;margin-bottom:16px">
           <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
-          <div class="progress-label" id="progress-label">uploading...</div>
+          <div style="font-size:10px;color:var(--text2);margin-top:4px" id="progress-label">uploading...</div>
         </div>
-
         <div id="upload-result" class="hidden">
           <div class="sec-title" style="margin-bottom:12px">uploaded</div>
           <div class="sg-row" style="margin-bottom:10px">
             <span class="sg-label">direct url</span>
             <span class="code-pill" id="ur-url"></span>
             <button class="btn btn-sm" onclick="copyText(document.getElementById('ur-url').textContent)">copy</button>
+            <button class="btn btn-sm" onclick="window.open(document.getElementById('ur-view').textContent,'_blank')">view page</button>
           </div>
-          <div class="embed-tabs" style="margin-bottom:6px">
+          <input type="hidden" id="ur-view">
+          <div class="embed-tabs">
             <span class="embed-tab active" onclick="switchEmbed('direct')">direct</span>
-            <span class="embed-tab" onclick="switchEmbed('img')">img tag</span>
+            <span class="embed-tab" onclick="switchEmbed('img')">img</span>
             <span class="embed-tab" onclick="switchEmbed('md')">markdown</span>
             <span class="embed-tab" onclick="switchEmbed('bb')">bbcode</span>
           </div>
           <div class="embed-code" id="embed-code"></div>
-          <div style="display:flex;gap:8px;margin-top:8px">
+          <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap">
             <button class="btn btn-sm" onclick="copyText(document.getElementById('embed-code').textContent)">copy embed</button>
             <button class="btn btn-sm" onclick="shortenLastUpload()">shorten url</button>
           </div>
         </div>
-
         <div class="sec-title" style="margin-top:8px">recent uploads</div>
-        <table class="file-tbl"><thead><tr><th>file</th><th>size</th><th>views</th><th>date</th><th></th></tr></thead><tbody id="recent-tbody"></tbody></table>
+        <table class="file-tbl"><thead><tr><th>preview</th><th>file</th><th>size</th><th>views</th><th>date</th><th></th></tr></thead><tbody id="recent-tbody"></tbody></table>
       </div>
 
       <!-- FILES -->
@@ -340,25 +409,30 @@ input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:point
               <option value="created_at:asc">oldest first</option>
               <option value="size:desc">largest first</option>
               <option value="views:desc">most viewed</option>
+              <option value="original_name:asc">name a-z</option>
             </select>
           </div>
         </div>
-
+        <div class="search-bar">
+          <input type="search" id="file-search" placeholder="search files..." onkeydown="if(event.key==='Enter')searchFiles()">
+          <button class="btn btn-sm" onclick="searchFiles()">search</button>
+          <button class="btn btn-sm" onclick="clearSearch()">clear</button>
+        </div>
         <div class="bulk-bar" id="bulk-bar">
           <span id="bulk-count">0 selected</span>
           <button class="btn btn-sm btn-danger" onclick="bulkDelete()">delete selected</button>
           <button class="btn btn-sm" onclick="createGallery()">create gallery</button>
           <button class="btn btn-sm" onclick="clearSelection()">clear</button>
         </div>
-
         <table class="file-tbl">
           <thead><tr>
-            <th class="check-col"><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"></th>
-            <th>file</th><th>size</th><th>type</th><th>views</th><th>uploaded</th><th></th>
+            <th style="width:32px"><input type="checkbox" id="select-all" onchange="toggleSelectAll(this)"></th>
+            <th style="width:40px">prev</th>
+            <th>file</th><th>size</th><th>views</th><th>uploaded</th><th></th>
           </tr></thead>
           <tbody id="files-tbody"></tbody>
         </table>
-        <div class="empty-state hidden" id="files-empty">no files uploaded yet</div>
+        <div class="empty-state hidden" id="files-empty">no files found</div>
         <div class="pagination" id="pagination"></div>
       </div>
 
@@ -366,38 +440,21 @@ input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:point
       <div class="section" id="sec-shortener">
         <div class="sec-title">url shortener</div>
         <div style="border:1px solid var(--border);border-top:2px solid var(--red);padding:16px;margin-bottom:20px">
-          <div class="field-label" style="margin-bottom:8px">shorten a url</div>
           <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end">
-            <div style="flex:1;min-width:200px">
-              <div class="field-label" style="margin-bottom:4px">url</div>
-              <input type="text" id="short-url-input" placeholder="https://..." style="width:100%">
-            </div>
-            <div>
-              <div class="field-label" style="margin-bottom:4px">expires</div>
+            <div style="flex:1;min-width:180px"><div class="field-label" style="margin-bottom:4px">url to shorten</div><input type="text" id="short-url-input" placeholder="https://..."></div>
+            <div><div class="field-label" style="margin-bottom:4px">expires</div>
               <select id="short-expires" style="background:var(--bg);border:1px solid var(--border2);color:var(--text2);padding:8px 10px">
-                <option value="">never</option>
-                <option value="1">1 hour</option>
-                <option value="24">24 hours</option>
-                <option value="168">7 days</option>
-                <option value="720">30 days</option>
+                <option value="">never</option><option value="1">1 hour</option><option value="24">24h</option><option value="168">7 days</option><option value="720">30 days</option>
               </select>
             </div>
             <button class="btn btn-sm btn-red" onclick="createShortUrl()" style="height:37px">shorten</button>
           </div>
           <div id="short-result" class="hidden" style="margin-top:12px">
-            <div class="sg-row">
-              <span class="sg-label">short url</span>
-              <span class="code-pill" id="short-result-url"></span>
-              <button class="btn btn-sm" onclick="copyText(document.getElementById('short-result-url').textContent)">copy</button>
-            </div>
+            <div class="sg-row"><span class="sg-label">short url</span><span class="code-pill" id="short-result-url"></span><button class="btn btn-sm" onclick="copyText(document.getElementById('short-result-url').textContent)">copy</button></div>
           </div>
         </div>
-
         <div class="sec-title">my short urls</div>
-        <table class="short-tbl">
-          <thead><tr><th>short url</th><th>target</th><th>clicks</th><th>expires</th><th></th></tr></thead>
-          <tbody id="short-tbody"></tbody>
-        </table>
+        <table class="short-tbl"><thead><tr><th>short url</th><th>target</th><th>clicks</th><th>expires</th><th></th></tr></thead><tbody id="short-tbody"></tbody></table>
         <div class="empty-state hidden" id="short-empty">no short urls yet</div>
       </div>
 
@@ -413,6 +470,14 @@ input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:point
           </div>
         </div>
         <div class="settings-group">
+          <div class="sg-header"><span class="sg-title">storage quota</span></div>
+          <div class="sg-body">
+            <div class="sg-row"><span class="sg-label">used</span><span id="quota-used-settings" style="color:var(--bright)">—</span></div>
+            <div class="sg-row"><span class="sg-label">limit</span><span id="quota-limit-settings" style="color:var(--bright)">—</span></div>
+            <div class="sg-row"><span class="sg-label">remaining</span><span id="quota-remaining-settings" style="color:var(--bright)">—</span></div>
+          </div>
+        </div>
+        <div class="settings-group">
           <div class="sg-header"><span class="sg-title">two-factor auth</span><span id="totp-status" style="font-size:9px;color:var(--text2)">disabled</span></div>
           <div class="sg-body">
             <div id="totp-enable-flow">
@@ -425,7 +490,7 @@ input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:point
             </div>
             <div id="totp-disable-flow" class="hidden">
               <div style="font-size:11px;color:var(--text2);margin-bottom:8px">2fa is enabled. enter password to disable.</div>
-              <div style="display:flex;gap:8px"><input type="password" id="totp-disable-pass" placeholder="password" style="width:180px"><button class="btn btn-sm btn-danger" onclick="disable2FA()">disable 2fa</button></div>
+              <div style="display:flex;gap:8px;flex-wrap:wrap"><input type="password" id="totp-disable-pass" placeholder="password" style="width:180px"><button class="btn btn-sm btn-danger" onclick="disable2FA()">disable 2fa</button></div>
             </div>
           </div>
         </div>
@@ -438,30 +503,81 @@ input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:point
             <div class="sg-row"><span class="sg-label">joined</span><span id="set-joined" style="color:var(--text2)">—</span></div>
           </div>
         </div>
+        <div class="settings-group" style="border-top-color:#660000">
+          <div class="sg-header"><span class="sg-title" style="color:#cc4444">danger zone</span></div>
+          <div class="sg-body">
+            <div style="font-size:11px;color:var(--text2);line-height:1.6;margin-bottom:10px">permanently delete your account and all uploaded files. this cannot be undone.</div>
+            <button class="btn btn-sm btn-danger" onclick="showDeleteAccountModal()">delete my account</button>
+          </div>
+        </div>
       </div>
 
       <!-- ADMIN -->
       <div class="section" id="sec-admin">
-        <div class="sec-title">admin panel</div>
+        <div class="sec-title">admin panel
+          <div class="sec-title-actions">
+            <button class="btn btn-sm" onclick="showAdminTab('users')">users</button>
+            <button class="btn btn-sm" onclick="showAdminTab('audit')">audit log</button>
+            <button class="btn btn-sm" onclick="showAdminTab('settings')">settings</button>
+          </div>
+        </div>
         <div class="stats-grid" style="margin-bottom:22px">
           <div class="stat"><div class="stat-l">users</div><div class="stat-v" id="a-users">—</div></div>
           <div class="stat"><div class="stat-l">files</div><div class="stat-v" id="a-files">—</div></div>
           <div class="stat"><div class="stat-l">server size</div><div class="stat-v" id="a-size">—</div></div>
           <div class="stat"><div class="stat-l">open invites</div><div class="stat-v" id="a-invites">—</div></div>
         </div>
-        <div class="sec-title">users</div>
-        <table class="admin-tbl" style="margin-bottom:22px"><thead><tr><th>username</th><th>email</th><th>role</th><th>files</th><th>storage</th><th>last seen</th><th></th></tr></thead><tbody id="admin-users-tbody"></tbody></table>
-        <div class="sec-title">active invites</div>
-        <div class="invite-grid" id="invite-grid"></div>
-        <div class="empty-state hidden" id="invite-empty">no pending invites</div>
-        <div style="margin-top:16px;border:1px solid var(--border);border-top:2px solid var(--red);padding:16px">
-          <div class="field-label" style="margin-bottom:10px">generate invite codes</div>
-          <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
-            <div><div class="field-label">count</div><input type="number" id="inv-count" value="1" min="1" max="50" style="width:70px"></div>
-            <div><div class="field-label">expires (days, blank=never)</div><input type="number" id="inv-expires" placeholder="never" style="width:110px"></div>
-            <button class="btn btn-sm btn-red" onclick="generateInvites()">generate</button>
+
+        <!-- Users tab -->
+        <div id="admin-tab-users">
+          <div class="sec-title">users</div>
+          <table class="admin-tbl" style="margin-bottom:22px"><thead><tr><th>username</th><th>role</th><th>files</th><th>quota</th><th>last seen</th><th></th></tr></thead><tbody id="admin-users-tbody"></tbody></table>
+
+          <!-- Storage chart -->
+          <div class="sec-title">storage by user</div>
+          <div class="storage-chart" id="storage-chart"></div>
+
+          <div class="sec-title" style="margin-top:20px">active invites</div>
+          <div class="invite-grid" id="invite-grid"></div>
+          <div class="empty-state hidden" id="invite-empty">no pending invites</div>
+          <div style="margin-top:16px;border:1px solid var(--border);border-top:2px solid var(--red);padding:16px">
+            <div class="field-label" style="margin-bottom:10px">generate invite codes</div>
+            <div style="display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap">
+              <div><div class="field-label">count</div><input type="number" id="inv-count" value="1" min="1" max="50" style="width:70px"></div>
+              <div><div class="field-label">expires (days)</div><input type="number" id="inv-expires" placeholder="never" style="width:100px"></div>
+              <button class="btn btn-sm btn-red" onclick="generateInvites()">generate</button>
+            </div>
+            <div class="invite-grid" id="new-invite-grid" style="margin-top:12px"></div>
           </div>
-          <div class="invite-grid" id="new-invite-grid" style="margin-top:12px"></div>
+        </div>
+
+        <!-- Audit tab -->
+        <div id="admin-tab-audit" class="hidden">
+          <div class="sec-title">audit log</div>
+          <table class="audit-tbl"><thead><tr><th>time</th><th>user</th><th>action</th><th>detail</th><th>ip</th></tr></thead><tbody id="audit-tbody"></tbody></table>
+          <div class="pagination" id="audit-pagination"></div>
+        </div>
+
+        <!-- Settings tab -->
+        <div id="admin-tab-settings" class="hidden">
+          <div class="sec-title">server settings</div>
+          <div class="settings-group">
+            <div class="sg-header"><span class="sg-title">message of the day</span></div>
+            <div class="sg-body">
+              <textarea id="admin-motd" placeholder="shown on login page, leave blank to hide" style="height:80px"></textarea>
+              <button class="btn btn-sm" onclick="saveAdminSettings()">save settings</button>
+            </div>
+          </div>
+          <div class="settings-group">
+            <div class="sg-header"><span class="sg-title">default user quota</span></div>
+            <div class="sg-body">
+              <div class="sg-row">
+                <span class="sg-label">default quota (GB)</span>
+                <input type="number" id="admin-default-quota" placeholder="2" style="width:80px" min="0.1" step="0.5">
+                <button class="btn btn-sm" onclick="saveAdminSettings()">save</button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -469,38 +585,131 @@ input[type=checkbox]{accent-color:var(--red);width:14px;height:14px;cursor:point
   </div>
 </div>
 
+<!-- FILE VIEWER -->
+<div id="page-viewer" class="page">
+  <div class="viewer-box">
+    <div class="viewer-header">
+      <a class="viewer-logo" href="/">Clinqies</a>
+    </div>
+    <div id="viewer-pw-gate" class="pw-gate hidden">
+      <div class="pw-gate-title">&#128274; this file is password protected</div>
+      <div class="pw-gate-form">
+        <input type="password" id="viewer-pw-input" placeholder="enter password">
+        <button class="btn btn-sm btn-red" onclick="unlockFile()">unlock</button>
+      </div>
+      <div class="err" id="viewer-pw-err" style="margin-top:8px"></div>
+    </div>
+    <div id="viewer-content" class="hidden">
+      <div class="viewer-meta">
+        <div class="viewer-filename" id="viewer-filename"></div>
+        <div class="viewer-stats">
+          <span>uploaded by <b id="viewer-uploader"></b></span>
+          <span id="viewer-size"></span>
+          <span id="viewer-views"> views</span>
+          <span id="viewer-date"></span>
+          <span id="viewer-expires" class="hidden" style="color:#cc8800"></span>
+        </div>
+        <div class="viewer-preview" id="viewer-preview"></div>
+        <div class="viewer-actions">
+          <a id="viewer-dl-btn" class="btn btn-sm btn-red" href="#" download>&#8681; download</a>
+          <button class="btn btn-sm" onclick="copyText(document.getElementById('viewer-dl-btn').href)">copy url</button>
+        </div>
+      </div>
+    </div>
+    <div id="viewer-error" class="hidden" style="text-align:center;padding:40px;color:var(--text2);font-size:12px;letter-spacing:.1em"></div>
+  </div>
+</div>
+
 <script>
-let currentUser=null,currentPage=1,selectedFiles=new Set(),lastUploadUrl='',lastUploadMime='';
+let currentUser=null,currentPage=1,auditPage=1,selectedFiles=new Set(),lastUploadUrl='',lastUploadMime='',currentEmbed='direct';
 
-// ── TOAST ──
-function toast(msg,type='info'){const el=document.createElement('div');el.className=`toast ${type}`;el.textContent=msg;document.getElementById('toast-container').appendChild(el);requestAnimationFrame(()=>el.classList.add('show'));setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),300)},3000);}
+// TOAST
+function toast(msg,type='info'){const el=document.createElement('div');el.className=`toast ${type}`;el.textContent=msg;document.getElementById('toast-container').appendChild(el);requestAnimationFrame(()=>el.classList.add('show'));setTimeout(()=>{el.classList.remove('show');setTimeout(()=>el.remove(),300)},3500);}
 
-// ── MODAL ──
+// MODAL
 function showModal(html){document.getElementById('modal-content').innerHTML=html;document.getElementById('modal-overlay').classList.remove('hidden');}
 function closeModal(){document.getElementById('modal-overlay').classList.add('hidden');}
 document.addEventListener('click',e=>{if(e.target.id==='modal-overlay')closeModal();});
 
-// ── PAGES ──
+// MOBILE
+function toggleMobileMenu(){
+  document.getElementById('topbar-nav').classList.toggle('open');
+  document.getElementById('sidebar').classList.toggle('open');
+}
+function closeMobileMenu(){
+  document.getElementById('topbar-nav').classList.remove('open');
+  document.getElementById('sidebar').classList.remove('open');
+}
+
+// PAGES
 function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));document.getElementById('page-'+id)?.classList.add('active');}
 function showSection(id){document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));document.querySelectorAll('.sb-item').forEach(s=>s.classList.remove('active'));document.getElementById('sec-'+id)?.classList.add('active');document.getElementById('sb-'+id)?.classList.add('active');if(id==='files'){currentPage=1;loadFiles();}if(id==='admin')loadAdmin();if(id==='shortener')loadShortUrls();}
 function showLogin(){document.getElementById('login-form').classList.remove('hidden');document.getElementById('register-form').classList.add('hidden');}
 function showRegister(){document.getElementById('login-form').classList.add('hidden');document.getElementById('register-form').classList.remove('hidden');}
 function togglePw(mode){document.getElementById('l-pass').type=mode==='text'?'text':'password';document.getElementById('pw-text').classList.toggle('on',mode==='text');document.getElementById('pw-hide').classList.toggle('on',mode==='hide');}
 
-// ── API ──
+// API
 async function api(method,path,body){const opts={method,credentials:'include',headers:{}};if(body){opts.headers['Content-Type']='application/json';opts.body=JSON.stringify(body);}const r=await fetch('/api'+path,opts);const data=await r.json().catch(()=>({}));if(!r.ok)throw new Error(data.error||'request failed');return data;}
 
-// ── AUTH ──
-async function doLogin(){const username=document.getElementById('l-user').value.trim();const password=document.getElementById('l-pass').value;const totp=document.getElementById('l-totp').value.trim();document.getElementById('l-err').textContent='';try{const res=await api('POST','/auth/login',{username,password,totp:totp||undefined});if(res.requires2fa){document.getElementById('totp-field').classList.remove('hidden');document.getElementById('l-err').textContent='enter your authenticator code';return;}currentUser=res.user;initDashboard();showPage('dashboard');}catch(e){document.getElementById('l-err').textContent=e.message;}}
+// AUTH
+async function doLogin(){
+  const username=document.getElementById('l-user').value.trim();
+  const password=document.getElementById('l-pass').value;
+  const totp=document.getElementById('l-totp').value.trim();
+  document.getElementById('l-err').textContent='';
+  try{
+    const res=await api('POST','/auth/login',{username,password,totp:totp||undefined});
+    if(res.requires2fa){document.getElementById('totp-field').classList.remove('hidden');document.getElementById('l-err').textContent='enter your authenticator code';return;}
+    currentUser=res.user;
+    if(res.motd){document.getElementById('motd-banner').textContent=res.motd;document.getElementById('motd-banner').classList.remove('hidden');}
+    initDashboard();showPage('dashboard');
+  }catch(e){document.getElementById('l-err').textContent=e.message;}
+}
 async function doRegister(){const invite=document.getElementById('r-invite').value.trim();const username=document.getElementById('r-user').value.trim();const email=document.getElementById('r-email').value.trim();const password=document.getElementById('r-pass').value;document.getElementById('r-err').textContent='';try{await api('POST','/auth/register',{invite,username,email,password});toast('account created! please log in','success');showLogin();}catch(e){document.getElementById('r-err').textContent=e.message;}}
 async function doLogout(){try{await api('POST','/auth/logout');}catch(e){}currentUser=null;showPage('login');}
 
-// ── INIT ──
-function initDashboard(){const u=currentUser;document.getElementById('tb-username').textContent=u.username;document.getElementById('api-key-display').textContent=u.api_key;document.getElementById('set-username').textContent=u.username;document.getElementById('set-email').textContent=u.email;document.getElementById('set-role').textContent=u.role;document.getElementById('set-joined').textContent=fmtDate(u.created_at);if(u.totp_enabled){document.getElementById('totp-status').textContent='enabled';document.getElementById('totp-status').style.color='#aa3333';document.getElementById('totp-enable-flow').classList.add('hidden');document.getElementById('totp-disable-flow').classList.remove('hidden');}if(u.role==='admin'){document.getElementById('admin-link').classList.remove('hidden');document.getElementById('sb-admin').classList.remove('hidden');}loadStats();loadRecentFiles();}
+// INIT
+function initDashboard(){
+  const u=currentUser;
+  document.getElementById('tb-username').textContent=u.username;
+  document.getElementById('api-key-display').textContent=u.api_key;
+  document.getElementById('set-username').textContent=u.username;
+  document.getElementById('set-email').textContent=u.email;
+  document.getElementById('set-role').textContent=u.role;
+  document.getElementById('set-joined').textContent=fmtDate(u.created_at);
+  if(u.totp_enabled){document.getElementById('totp-status').textContent='enabled';document.getElementById('totp-status').style.color='#aa3333';document.getElementById('totp-enable-flow').classList.add('hidden');document.getElementById('totp-disable-flow').classList.remove('hidden');}
+  if(u.role==='admin'){document.getElementById('admin-link').classList.remove('hidden');document.getElementById('sb-admin').classList.remove('hidden');}
+  loadStats();loadRecentFiles();
+}
 
-async function loadStats(){try{const s=await api('GET','/files/stats');document.getElementById('s-files').textContent=s.file_count;document.getElementById('s-size').textContent=fmtSize(s.total_size);document.getElementById('s-views').textContent=s.total_views;document.getElementById('s-server').textContent=fmtSize(s.global_used);const pct=Math.min(100,(s.global_used/s.global_quota)*100);document.getElementById('quota-fill').style.width=pct.toFixed(1)+'%';document.getElementById('quota-used').textContent=fmtSize(s.global_used);}catch(e){}}
+async function loadStats(){
+  try{
+    const s=await api('GET','/files/stats');
+    document.getElementById('s-files').textContent=s.file_count;
+    document.getElementById('s-size').textContent=fmtSize(s.total_size);
+    document.getElementById('s-views').textContent=s.total_views;
 
-// ── UPLOAD ──
+    const userPct=Math.min(100,(s.user_used/s.user_quota)*100);
+    document.getElementById('s-quota').textContent=fmtSize(s.user_used)+' / '+fmtSize(s.user_quota);
+    document.getElementById('quota-fill').style.width=userPct.toFixed(1)+'%';
+    document.getElementById('quota-fill').className='quota-fill'+(userPct>90?' danger':userPct>70?' warn':'');
+    document.getElementById('quota-used').textContent=fmtSize(s.user_used);
+    document.getElementById('quota-total').textContent=fmtSize(s.user_quota);
+    document.getElementById('quota-pct').textContent=userPct.toFixed(0)+'%';
+
+    const srvPct=Math.min(100,(s.global_used/s.global_quota)*100);
+    document.getElementById('server-fill').style.width=srvPct.toFixed(1)+'%';
+    document.getElementById('server-used').textContent=fmtSize(s.global_used);
+    document.getElementById('server-pct').textContent=srvPct.toFixed(1)+'%';
+
+    // Settings quota display
+    document.getElementById('quota-used-settings').textContent=fmtSize(s.user_used);
+    document.getElementById('quota-limit-settings').textContent=fmtSize(s.user_quota);
+    document.getElementById('quota-remaining-settings').textContent=fmtSize(Math.max(0,s.user_quota-s.user_used));
+  }catch(e){}
+}
+
+// DOM READY
 document.addEventListener('DOMContentLoaded',()=>{
   const zone=document.getElementById('upload-zone');
   zone.addEventListener('dragover',e=>{e.preventDefault();zone.classList.add('over');});
@@ -511,34 +720,50 @@ document.addEventListener('DOMContentLoaded',()=>{
 
   // Paste to upload
   document.addEventListener('paste',e=>{
-    if(document.getElementById('page-dashboard').classList.contains('active')){
-      const items=e.clipboardData?.items;
-      if(!items)return;
-      for(const item of items){
-        if(item.type.startsWith('image/')){
-          const file=item.getAsFile();
-          if(file){toast('pasting image...','info');uploadFile(file);break;}
-        }
+    if(!document.getElementById('page-dashboard').classList.contains('active'))return;
+    const items=e.clipboardData?.items;
+    if(!items)return;
+    for(const item of items){
+      if(item.type.startsWith('image/')){
+        const file=item.getAsFile();
+        if(file){toast('pasting image...','info');uploadFile(file);break;}
       }
     }
   });
 
+  // Check if viewer page
+  const path=window.location.pathname;
+  if(path.startsWith('/v/')){
+    const filename=path.slice(3);
+    showPage('viewer');
+    loadViewer(filename);
+    return;
+  }
+
   api('GET','/auth/me').then(user=>{currentUser=user;initDashboard();showPage('dashboard');}).catch(()=>{});
 });
 
+// UPLOAD
 function handleFileSelect(files){if(files&&files[0])uploadFile(files[0]);}
 
 async function uploadFile(file){
   if(file.size>50*1024*1024){toast('file exceeds 50MB limit','error');return;}
   const expiryHours=document.getElementById('expiry-select')?.value||'';
+  const filePassword=document.getElementById('file-password')?.value||'';
   const prog=document.getElementById('upload-progress');
   const fill=document.getElementById('progress-fill');
   const label=document.getElementById('progress-label');
   const result=document.getElementById('upload-result');
   prog.style.display='block';result.classList.add('hidden');fill.style.width='0%';
   label.textContent='uploading '+file.name+'...';
+
+  let url='/api/upload';
+  const params=[];
+  if(expiryHours)params.push(`expires_in_hours=${expiryHours}`);
+  if(filePassword)params.push(`password=${encodeURIComponent(filePassword)}`);
+  if(params.length)url+='?'+params.join('&');
+
   const form=new FormData();form.append('file',file);
-  const url='/api/upload'+(expiryHours?`?expires_in_hours=${expiryHours}`:'');
   const xhr=new XMLHttpRequest();xhr.open('POST',url);xhr.withCredentials=true;
   xhr.upload.onprogress=e=>{if(e.lengthComputable){const pct=(e.loaded/e.total*100).toFixed(0);fill.style.width=pct+'%';label.textContent=`uploading... ${pct}%`;}};
   xhr.onload=()=>{
@@ -547,9 +772,11 @@ async function uploadFile(file){
     if(data.url){
       lastUploadUrl=data.url;lastUploadMime=file.type;
       document.getElementById('ur-url').textContent=data.url;
+      document.getElementById('ur-view').value=data.view_url||'';
       setEmbedCode('direct',data.url,file.type);
       result.classList.remove('hidden');
       copyText(data.url);toast('uploaded! url copied','success');
+      if(document.getElementById('file-password'))document.getElementById('file-password').value='';
       loadStats();loadRecentFiles();
     }else toast(data.error||'upload failed','error');
   };
@@ -557,12 +784,11 @@ async function uploadFile(file){
   xhr.send(form);
 }
 
-// ── EMBED CODES ──
-let currentEmbedUrl='',currentEmbedMime='';
+// EMBED
 function setEmbedCode(type,url,mime){
-  currentEmbedUrl=url;currentEmbedMime=mime;
+  currentEmbed=type;
   document.querySelectorAll('.embed-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelector(`.embed-tab[onclick="switchEmbed('${type}')"]`)?.classList.add('active');
+  document.querySelectorAll('.embed-tab').forEach(t=>{if(t.textContent.toLowerCase()===type||t.getAttribute('onclick')?.includes(`'${type}'`))t.classList.add('active');});
   const el=document.getElementById('embed-code');
   const isImg=mime&&mime.startsWith('image/');
   if(type==='direct')el.textContent=url;
@@ -570,46 +796,51 @@ function setEmbedCode(type,url,mime){
   else if(type==='md')el.textContent=isImg?`![image](${url})`:`[link](${url})`;
   else if(type==='bb')el.textContent=isImg?`[img]${url}[/img]`:`[url]${url}[/url]`;
 }
-function switchEmbed(type){setEmbedCode(type,currentEmbedUrl,currentEmbedMime);}
+function switchEmbed(type){setEmbedCode(type,lastUploadUrl,lastUploadMime);}
 
-// ── SHORT URL FROM UPLOAD ──
-async function shortenLastUpload(){
-  if(!lastUploadUrl)return;
-  try{const res=await api('POST','/short',{url:lastUploadUrl});copyText(res.short_url);toast('short url copied: '+res.short_url,'success');}
-  catch(e){toast(e.message,'error');}
+async function shortenLastUpload(){if(!lastUploadUrl)return;try{const res=await api('POST','/short',{url:lastUploadUrl});copyText(res.short_url);toast('short url copied','success');}catch(e){toast(e.message,'error');}}
+
+// FILES
+async function loadRecentFiles(){
+  try{const res=await api('GET','/files?limit=5&sort=created_at&order=desc');renderFileTable('recent-tbody',res.files,true);}catch(e){}
 }
-
-// ── FILES ──
-async function loadRecentFiles(){try{const res=await api('GET','/files?limit=5&sort=created_at&order=desc');renderFileTable('recent-tbody',res.files,true);}catch(e){}}
 
 async function loadFiles(){
   const sort=document.getElementById('sort-select').value;const[s,o]=sort.split(':');
+  const search=document.getElementById('file-search').value;
   try{
-    const res=await api('GET',`/files?page=${currentPage}&limit=30&sort=${s}&order=${o}`);
+    const res=await api('GET',`/files?page=${currentPage}&limit=30&sort=${s}&order=${o}&search=${encodeURIComponent(search)}`);
     renderFileTable('files-tbody',res.files,false);
     document.getElementById('files-empty').classList.toggle('hidden',res.files.length>0);
     renderPagination(res.total,res.page,res.limit);
   }catch(e){}
 }
 
+function searchFiles(){currentPage=1;loadFiles();}
+function clearSearch(){document.getElementById('file-search').value='';currentPage=1;loadFiles();}
+
 function renderFileTable(tbodyId,files,compact){
   const tbody=document.getElementById(tbodyId);
   if(!files||!files.length){tbody.innerHTML=`<tr><td colspan="7" class="empty-state">no files</td></tr>`;return;}
   tbody.innerHTML=files.map(f=>{
     const ext=f.filename.split('.').pop().toUpperCase();
-    const expBadge=f.expires_at?`<span class="expiry-badge">exp ${fmtDate(f.expires_at)}</span>`:'';
-    return`<tr data-id="${f.id}">
-      ${!compact?`<td><input type="checkbox" onchange="toggleSelect(${f.id},this)" ${selectedFiles.has(f.id)?'checked':''}></td>`:'<td></td>'}
-      <td><span class="fext">${ext}</span><span class="fname" onclick="openFile('${f.url}')">${esc(f.original_name)}</span>${expBadge}</td>
+    const isImg=f.mime_type&&f.mime_type.startsWith('image/');
+    const thumb=isImg?`<img class="thumb" src="${f.url}" loading="lazy" alt="">`:`<div class="thumb-placeholder">${ext}</div>`;
+    const expBadge=f.expires_at?`<span class="badge badge-exp">exp ${fmtDate(f.expires_at)}</span>`:'';
+    const pwBadge=f.password_protected?`<span class="badge badge-pw">pw</span>`:'';
+    const base=f.view_url||f.url;
+    return`<tr data-id="${f.id}" ${!compact&&selectedFiles.has(f.id)?'class="selected"':''}>
+      <td>${!compact?`<input type="checkbox" onchange="toggleSelect(${f.id},this)" ${selectedFiles.has(f.id)?'checked':''}>`:''}}</td>
+      <td>${thumb}</td>
+      <td><span class="fext">${ext}</span><span class="fname" onclick="openFile('${base}')">${esc(f.original_name)}</span>${expBadge}${pwBadge}</td>
       <td class="dim">${fmtSize(f.size)}</td>
-      ${!compact?`<td class="dim">${f.mime_type.split('/')[0]}</td>`:''}
       <td class="dim">${f.views}</td>
       <td class="dim">${fmtDate(f.created_at)}</td>
       <td><div class="file-acts">
         <button onclick="copyText('${f.url}')">copy</button>
-        <button onclick="openFile('${f.url}')">view</button>
+        <button onclick="openFile('${base}')">view</button>
         <button onclick="showEmbedModal('${f.url}','${f.mime_type}')">embed</button>
-        <button class="del" onclick="deleteFile(${f.id},this)">delete</button>
+        <button class="del" onclick="deleteFile(${f.id},this)">del</button>
       </div></td>
     </tr>`;
   }).join('');
@@ -617,94 +848,30 @@ function renderFileTable(tbodyId,files,compact){
 
 function showEmbedModal(url,mime){
   const isImg=mime&&mime.startsWith('image/');
-  const direct=url;
-  const img=isImg?`<img src="${url}" alt="image">`:`<a href="${url}">${url}</a>`;
-  const md=isImg?`![image](${url})`:`[link](${url})`;
-  const bb=isImg?`[img]${url}[/img]`:`[url]${url}[/url]`;
-  showModal(`
-    <div class="modal-title">embed codes</div>
-    <div style="display:flex;flex-direction:column;gap:10px">
-      ${[['direct url',direct],['img / html',img],['markdown',md],['bbcode',bb]].map(([label,code])=>`
-        <div>
-          <div class="field-label" style="margin-bottom:4px">${label}</div>
-          <div style="display:flex;gap:8px;align-items:center">
-            <div class="embed-code" style="flex:1;font-size:10px">${esc(code)}</div>
-            <button class="btn btn-sm" onclick="copyText('${code.replace(/'/g,"\\'")}')">copy</button>
-          </div>
-        </div>
-      `).join('')}
-    </div>
-    <div class="modal-actions"><button class="btn btn-sm" onclick="closeModal()">close</button></div>
-  `);
+  const codes=[['direct url',url],['img / html',isImg?`<img src="${url}" alt="image">`:`<a href="${url}">${url}</a>`],['markdown',isImg?`![image](${url})`:`[link](${url})`],['bbcode',isImg?`[img]${url}[/img]`:`[url]${url}[/url]`]];
+  showModal(`<div class="modal-title">embed codes</div><div style="display:flex;flex-direction:column;gap:10px">${codes.map(([l,c])=>`<div><div class="field-label" style="margin-bottom:4px">${l}</div><div style="display:flex;gap:8px;align-items:center"><div class="embed-code" style="flex:1;font-size:10px">${esc(c)}</div><button class="btn btn-sm" onclick="copyText(${JSON.stringify(c)})">copy</button></div></div>`).join('')}</div><div class="modal-actions"><button class="btn btn-sm" onclick="closeModal()">close</button></div>`);
 }
 
-// ── SELECTION ──
-function toggleSelect(id,cb){if(cb.checked)selectedFiles.add(id);else selectedFiles.delete(id);updateBulkBar();}
-function toggleSelectAll(cb){const checkboxes=document.querySelectorAll('#files-tbody input[type=checkbox]');checkboxes.forEach(c=>{c.checked=cb.checked;const id=parseInt(c.closest('tr').dataset.id);if(cb.checked)selectedFiles.add(id);else selectedFiles.delete(id);c.closest('tr').classList.toggle('selected',cb.checked);});updateBulkBar();}
+// SELECTION
+function toggleSelect(id,cb){if(cb.checked)selectedFiles.add(id);else selectedFiles.delete(id);cb.closest('tr').classList.toggle('selected',cb.checked);updateBulkBar();}
+function toggleSelectAll(cb){document.querySelectorAll('#files-tbody input[type=checkbox]').forEach(c=>{c.checked=cb.checked;const id=parseInt(c.closest('tr').dataset.id);if(cb.checked)selectedFiles.add(id);else selectedFiles.delete(id);c.closest('tr').classList.toggle('selected',cb.checked);});updateBulkBar();}
 function clearSelection(){selectedFiles.clear();document.querySelectorAll('#files-tbody input[type=checkbox]').forEach(c=>{c.checked=false;c.closest('tr').classList.remove('selected');});document.getElementById('select-all').checked=false;updateBulkBar();}
-function updateBulkBar(){const bar=document.getElementById('bulk-bar');const count=selectedFiles.size;bar.classList.toggle('show',count>0);document.getElementById('bulk-count').textContent=`${count} selected`;}
+function updateBulkBar(){const bar=document.getElementById('bulk-bar');bar.classList.toggle('show',selectedFiles.size>0);document.getElementById('bulk-count').textContent=`${selectedFiles.size} selected`;}
 
-async function bulkDelete(){
-  if(!selectedFiles.size)return;
-  if(!confirm(`delete ${selectedFiles.size} file(s) permanently?`))return;
-  try{await api('DELETE','/files',{ids:[...selectedFiles]});toast(`deleted ${selectedFiles.size} file(s)`,'success');selectedFiles.clear();loadFiles();loadStats();}
-  catch(e){toast(e.message,'error');}
-}
+async function bulkDelete(){if(!selectedFiles.size)return;if(!confirm(`delete ${selectedFiles.size} file(s) permanently?`))return;try{await api('DELETE','/files',{ids:[...selectedFiles]});toast(`deleted ${selectedFiles.size} file(s)`,'success');selectedFiles.clear();loadFiles();loadStats();}catch(e){toast(e.message,'error');}}
+async function createGallery(){if(!selectedFiles.size){toast('select files first','error');return;}const name=prompt('gallery name:','my gallery');if(name===null)return;try{const res=await api('POST','/gallery',{name:name||'gallery',file_ids:[...selectedFiles]});copyText(res.gallery_url);toast('gallery created! url copied','success');clearSelection();}catch(e){toast(e.message,'error');}}
 
-async function createGallery(){
-  if(!selectedFiles.size){toast('select files first','error');return;}
-  const name=prompt('gallery name (optional):','my gallery');
-  if(name===null)return;
-  try{
-    const res=await api('POST','/gallery',{name:name||'gallery',file_ids:[...selectedFiles]});
-    copyText(res.gallery_url);
-    toast('gallery created! url copied','success');
-    clearSelection();
-  }catch(e){toast(e.message,'error');}
-}
-
-function renderPagination(total,page,limit){const pages=Math.ceil(total/limit);const el=document.getElementById('pagination');if(pages<=1){el.innerHTML='';return;}el.innerHTML=`<button class="btn btn-sm" onclick="changePage(${page-1})" ${page<=1?'disabled':''}>&larr;</button><span>page ${page} / ${pages} &nbsp;&middot;&nbsp; ${total} files</span><button class="btn btn-sm" onclick="changePage(${page+1})" ${page>=pages?'disabled':''}>&rarr;</button>`;}
+function renderPagination(total,page,limit){const pages=Math.ceil(total/limit);const el=document.getElementById('pagination');if(pages<=1){el.innerHTML='';return;}el.innerHTML=`<button class="btn btn-sm" onclick="changePage(${page-1})" ${page<=1?'disabled':''}>&larr;</button><span>page ${page} / ${pages} &middot; ${total} files</span><button class="btn btn-sm" onclick="changePage(${page+1})" ${page>=pages?'disabled':''}>&rarr;</button>`;}
 function changePage(p){currentPage=p;loadFiles();}
-
-async function deleteFile(id,btn){if(!confirm('delete this file permanently?'))return;try{await api('DELETE',`/files/${id}`);btn.closest('tr').remove();toast('file deleted','success');loadStats();}catch(e){toast(e.message,'error');}}
+async function deleteFile(id,btn){if(!confirm('delete this file permanently?'))return;try{await api('DELETE',`/files/${id}`);btn.closest('tr').remove();toast('deleted','success');loadStats();}catch(e){toast(e.message,'error');}}
 function openFile(url){window.open(url,'_blank');}
 
-// ── SHORTENER ──
-async function createShortUrl(){
-  const url=document.getElementById('short-url-input').value.trim();
-  const expires=document.getElementById('short-expires').value;
-  if(!url){toast('enter a url','error');return;}
-  try{
-    const res=await api('POST','/short',{url,expires_in_hours:expires||undefined});
-    document.getElementById('short-result-url').textContent=res.short_url;
-    document.getElementById('short-result').classList.remove('hidden');
-    copyText(res.short_url);toast('short url copied','success');
-    loadShortUrls();
-  }catch(e){toast(e.message,'error');}
-}
-
-async function loadShortUrls(){
-  try{
-    const res=await api('GET','/short');
-    const tbody=document.getElementById('short-tbody');
-    const empty=document.getElementById('short-empty');
-    empty.classList.toggle('hidden',res.urls.length>0);
-    tbody.innerHTML=res.urls.map(u=>`<tr>
-      <td><span class="fname" onclick="copyText('${u.short_url}')">${u.short_url}</span></td>
-      <td class="dim" style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(u.target_url)}</td>
-      <td class="dim">${u.clicks}</td>
-      <td class="dim">${u.expires_at?fmtDate(u.expires_at):'never'}</td>
-      <td><div class="file-acts">
-        <button onclick="copyText('${u.short_url}')">copy</button>
-        <button class="del" onclick="deleteShortUrl(${u.id},this)">delete</button>
-      </div></td>
-    </tr>`).join('');
-  }catch(e){}
-}
-
+// SHORTENER
+async function createShortUrl(){const url=document.getElementById('short-url-input').value.trim();const expires=document.getElementById('short-expires').value;if(!url){toast('enter a url','error');return;}try{const res=await api('POST','/short',{url,expires_in_hours:expires||undefined});document.getElementById('short-result-url').textContent=res.short_url;document.getElementById('short-result').classList.remove('hidden');copyText(res.short_url);toast('short url copied','success');loadShortUrls();}catch(e){toast(e.message,'error');}}
+async function loadShortUrls(){try{const res=await api('GET','/short');const tbody=document.getElementById('short-tbody');document.getElementById('short-empty').classList.toggle('hidden',res.urls.length>0);tbody.innerHTML=res.urls.map(u=>`<tr><td><span class="fname" onclick="copyText('${u.short_url}')">${u.short_url}</span></td><td class="dim" style="max-width:180px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(u.target_url)}</td><td class="dim">${u.clicks}</td><td class="dim">${u.expires_at?fmtDate(u.expires_at):'never'}</td><td><div class="file-acts"><button onclick="copyText('${u.short_url}')">copy</button><button class="del" onclick="deleteShortUrl(${u.id},this)">del</button></div></td></tr>`).join('');}catch(e){}}
 async function deleteShortUrl(id,btn){try{await api('DELETE',`/short/${id}`);btn.closest('tr').remove();toast('deleted','success');}catch(e){toast(e.message,'error');}}
 
-// ── SETTINGS ──
+// SETTINGS
 function downloadShareXConfig(){window.location.href='/api/config/sharex';}
 function downloadShellScript(){window.location.href='/api/config/flameshot';}
 async function regenApiKey(){const pw=prompt('enter your password:');if(!pw)return;try{const res=await api('POST','/auth/apikey/regen',{password:pw});document.getElementById('api-key-display').textContent=res.api_key;toast('api key regenerated','success');}catch(e){toast(e.message,'error');}}
@@ -712,17 +879,206 @@ async function setup2FA(){try{const res=await api('POST','/auth/2fa/setup');docu
 async function confirm2FA(){const token=document.getElementById('totp-confirm-input').value.trim();try{await api('POST','/auth/2fa/confirm',{token});toast('2fa enabled','success');document.getElementById('totp-status').textContent='enabled';document.getElementById('totp-status').style.color='#aa3333';document.getElementById('totp-enable-flow').classList.add('hidden');document.getElementById('totp-disable-flow').classList.remove('hidden');}catch(e){toast(e.message,'error');}}
 async function disable2FA(){const password=document.getElementById('totp-disable-pass').value;try{await api('DELETE','/auth/2fa',{password});toast('2fa disabled','info');document.getElementById('totp-status').textContent='disabled';document.getElementById('totp-status').style.color='';document.getElementById('totp-enable-flow').classList.remove('hidden');document.getElementById('totp-disable-flow').classList.add('hidden');}catch(e){toast(e.message,'error');}}
 
-// ── ADMIN ──
-async function loadAdmin(){try{const[stats,users,invites]=await Promise.all([api('GET','/admin/stats'),api('GET','/admin/users'),api('GET','/admin/invites')]);document.getElementById('a-users').textContent=stats.user_count;document.getElementById('a-files').textContent=stats.file_count;document.getElementById('a-size').textContent=fmtSize(stats.total_size);document.getElementById('a-invites').textContent=stats.pending_invites;document.getElementById('admin-users-tbody').innerHTML=users.users.map(u=>`<tr><td style="color:var(--bright)">${esc(u.username)}</td><td class="dim">${esc(u.email)}</td><td><span class="role-badge ${u.role}">${u.role}</span></td><td class="dim">${u.file_count}</td><td class="dim">${fmtSize(u.storage_used)}</td><td class="dim">${u.last_seen?fmtDate(u.last_seen):'never'}</td><td><div class="file-acts"><button onclick="toggleRole(${u.id},'${u.role==='admin'?'user':'admin'}')">${u.role==='admin'?'demote':'promote'}</button><button class="del" onclick="deleteUser(${u.id})">delete</button></div></td></tr>`).join('');const pending=invites.invites.filter(i=>!i.used_by);document.getElementById('invite-empty').classList.toggle('hidden',pending.length>0);document.getElementById('invite-grid').innerHTML=pending.map(i=>`<div style="display:flex;align-items:center;gap:6px"><span class="invite-code">${i.code}</span><button class="btn btn-sm" onclick="copyText('${i.code}')">copy</button><button class="btn btn-sm btn-danger" onclick="revokeInvite(${i.id})">revoke</button></div>`).join('');}catch(e){toast(e.message,'error');}}
+// ADMIN
+function showAdminTab(tab){['users','audit','settings'].forEach(t=>{document.getElementById(`admin-tab-${t}`)?.classList.toggle('hidden',t!==tab);});if(tab==='audit')loadAuditLog();if(tab==='settings')loadAdminSettings();}
+
+async function loadAdmin(){
+  try{
+    const[stats,users,invites,chart]=await Promise.all([api('GET','/admin/stats'),api('GET','/admin/users'),api('GET','/admin/invites'),api('GET','/admin/storage-chart')]);
+    document.getElementById('a-users').textContent=stats.user_count;
+    document.getElementById('a-files').textContent=stats.file_count;
+    document.getElementById('a-size').textContent=fmtSize(stats.total_size);
+    document.getElementById('a-invites').textContent=stats.pending_invites;
+
+    document.getElementById('admin-users-tbody').innerHTML=users.users.map(u=>{
+      const pct=u.storage_quota>0?Math.min(100,(u.storage_used/u.storage_quota)*100):0;
+      return`<tr>
+        <td style="color:var(--bright)">${esc(u.username)}${u.suspended?'<span class="suspended-badge">suspended</span>':''}</td>
+        <td><span class="role-badge ${u.role}">${u.role}</span></td>
+        <td class="dim">${u.file_count}</td>
+        <td class="dim">${fmtSize(u.storage_used)} / ${fmtSize(u.storage_quota)} <span style="color:var(--text3)">(${pct.toFixed(0)}%)</span></td>
+        <td class="dim">${u.last_seen?fmtDate(u.last_seen):'never'}</td>
+        <td><div class="file-acts">
+          <button onclick="toggleRole(${u.id},'${u.role==='admin'?'user':'admin'}')">${u.role==='admin'?'demote':'promote'}</button>
+          <button onclick="setQuota(${u.id},'${u.username}',${u.storage_quota})">quota</button>
+          <button onclick="toggleSuspend(${u.id},${u.suspended?0:1})">${u.suspended?'unsuspend':'suspend'}</button>
+          <button class="del" onclick="deleteUser(${u.id})">delete</button>
+        </div></td>
+      </tr>`;
+    }).join('');
+
+    // Storage chart
+    const maxSize=Math.max(...chart.users.map(u=>u.storage_quota),1);
+    document.getElementById('storage-chart').innerHTML=chart.users.map(u=>{
+      const fillPct=(u.storage_used/maxSize*100).toFixed(1);
+      const over=u.storage_used>u.storage_quota;
+      return`<div class="chart-row">
+        <div class="chart-name" title="${u.username}">${esc(u.username)}</div>
+        <div class="chart-bar-wrap"><div class="chart-bar-fill${over?' over':''}" style="width:${fillPct}%"></div></div>
+        <div class="chart-label">${fmtSize(u.storage_used)}</div>
+      </div>`;
+    }).join('');
+
+    const pending=invites.invites.filter(i=>!i.used_by);
+    document.getElementById('invite-empty').classList.toggle('hidden',pending.length>0);
+    document.getElementById('invite-grid').innerHTML=pending.map(i=>`<div style="display:flex;align-items:center;gap:6px"><span class="invite-code">${i.code}</span><button class="btn btn-sm" onclick="copyText('${i.code}')">copy</button><button class="btn btn-sm btn-danger" onclick="revokeInvite(${i.id})">revoke</button></div>`).join('');
+  }catch(e){toast(e.message,'error');}
+}
+
+async function loadAuditLog(){
+  try{
+    const res=await api('GET',`/admin/audit?page=${auditPage}&limit=50`);
+    document.getElementById('audit-tbody').innerHTML=res.logs.map(l=>`<tr>
+      <td class="dim" style="white-space:nowrap">${fmtDateTime(l.created_at)}</td>
+      <td style="color:var(--bright)">${esc(l.username||'—')}</td>
+      <td><span class="action-badge ${l.action}">${l.action}</span></td>
+      <td class="dim">${esc(l.detail||'—')}</td>
+      <td class="dim">${l.ip||'—'}</td>
+    </tr>`).join('');
+    const pages=Math.ceil(res.total/50);
+    document.getElementById('audit-pagination').innerHTML=pages>1?`<button class="btn btn-sm" onclick="auditPage--;loadAuditLog()" ${auditPage<=1?'disabled':''}>&larr;</button><span>page ${auditPage}/${pages}</span><button class="btn btn-sm" onclick="auditPage++;loadAuditLog()" ${auditPage>=pages?'disabled':''}>&rarr;</button>`:'';
+  }catch(e){}
+}
+
+async function loadAdminSettings(){
+  try{
+    const s=await api('GET','/admin/settings');
+    document.getElementById('admin-motd').value=s.motd||'';
+    document.getElementById('admin-default-quota').value=((parseInt(s.default_quota)||2147483648)/1024/1024/1024).toFixed(1);
+  }catch(e){}
+}
+
+async function saveAdminSettings(){
+  const motd=document.getElementById('admin-motd').value;
+  const quota=document.getElementById('admin-default-quota').value;
+  try{await api('PATCH','/admin/settings',{motd,default_quota_gb:quota});toast('settings saved','success');}
+  catch(e){toast(e.message,'error');}
+}
+
 async function generateInvites(){const count=document.getElementById('inv-count').value;const days=document.getElementById('inv-expires').value;try{const res=await api('POST','/admin/invites',{count:parseInt(count),expires_in_days:days||undefined});document.getElementById('new-invite-grid').innerHTML=res.codes.map(c=>`<div style="display:flex;align-items:center;gap:6px"><span class="invite-code">${c}</span><button class="btn btn-sm" onclick="copyText('${c}')">copy</button></div>`).join('');toast(`generated ${res.codes.length} invite(s)`,'success');loadAdmin();}catch(e){toast(e.message,'error');}}
 async function revokeInvite(id){try{await api('DELETE',`/admin/invites/${id}`);loadAdmin();toast('revoked','info');}catch(e){toast(e.message,'error');}}
 async function toggleRole(id,role){try{await api('PATCH',`/admin/users/${id}/role`,{role});loadAdmin();toast('role updated','success');}catch(e){toast(e.message,'error');}}
+
+async function setQuota(id,username,currentQuota){
+  const gb=prompt(`set quota for ${username} (GB):`,((currentQuota||2147483648)/1024/1024/1024).toFixed(1));
+  if(!gb)return;
+  try{await api('PATCH',`/admin/users/${id}/quota`,{quota_gb:parseFloat(gb)});loadAdmin();toast('quota updated','success');}
+  catch(e){toast(e.message,'error');}
+}
+
+async function toggleSuspend(id,suspended){
+  const action=suspended?'suspend':'unsuspend';
+  if(!confirm(`${action} this user?`))return;
+  try{await api('PATCH',`/admin/users/${id}/suspend`,{suspended:!!suspended});loadAdmin();toast(`user ${action}ed`,'info');}
+  catch(e){toast(e.message,'error');}
+}
+
 async function deleteUser(id){if(!confirm('delete this user and all their files?'))return;try{await api('DELETE',`/admin/users/${id}`);loadAdmin();toast('user deleted','success');}catch(e){toast(e.message,'error');}}
 
-// ── UTILS ──
+// FILE VIEWER
+let viewerFilename='';
+async function loadViewer(filename){
+  viewerFilename=filename;
+  try{
+    const f=await api('GET',`/files/view/${filename}`);
+    if(f.password_protected){
+      document.getElementById('viewer-pw-gate').classList.remove('hidden');
+      return;
+    }
+    showViewerContent(f);
+  }catch(e){
+    document.getElementById('viewer-error').textContent=e.message||'file not found';
+    document.getElementById('viewer-error').classList.remove('hidden');
+  }
+}
+
+async function unlockFile(){
+  const pw=document.getElementById('viewer-pw-input').value;
+  document.getElementById('viewer-pw-err').textContent='';
+  try{
+    await api('POST',`/files/view/${viewerFilename}/unlock`,{password:pw});
+    document.getElementById('viewer-pw-gate').classList.add('hidden');
+    const f=await api('GET',`/files/view/${viewerFilename}`);
+    showViewerContent(f);
+  }catch(e){document.getElementById('viewer-pw-err').textContent=e.message;}
+}
+
+function showViewerContent(f){
+  document.getElementById('viewer-content').classList.remove('hidden');
+  document.getElementById('viewer-filename').textContent=f.original_name;
+  document.getElementById('viewer-uploader').textContent=f.uploader;
+  document.getElementById('viewer-size').textContent=fmtSize(f.size);
+  document.getElementById('viewer-views').textContent=f.views+' views';
+  document.getElementById('viewer-date').textContent=fmtDate(f.created_at);
+  document.getElementById('viewer-dl-btn').href=f.url;
+  document.getElementById('viewer-dl-btn').download=f.original_name;
+
+  if(f.expires_at){
+    const exp=document.getElementById('viewer-expires');
+    exp.textContent='expires '+fmtDate(f.expires_at);
+    exp.classList.remove('hidden');
+  }
+
+  const preview=document.getElementById('viewer-preview');
+  if(f.mime_type.startsWith('image/')){
+    preview.innerHTML=`<img src="${f.url}" alt="${esc(f.original_name)}" style="max-width:100%;max-height:600px;border:1px solid var(--border)">`;
+  }else if(f.mime_type.startsWith('video/')){
+    preview.innerHTML=`<video controls style="width:100%;max-width:100%;border:1px solid var(--border)"><source src="${f.url}" type="${f.mime_type}"></video>`;
+  }else if(f.mime_type.startsWith('audio/')){
+    preview.innerHTML=`<audio controls style="width:100%"><source src="${f.url}" type="${f.mime_type}"></audio>`;
+  }else if(f.mime_type==='application/pdf'){
+    preview.innerHTML=`<embed src="${f.url}" type="application/pdf" style="width:100%;height:600px;border:1px solid var(--border)">`;
+  }else{
+    preview.innerHTML=`<div style="padding:20px;color:var(--text2);font-size:11px;border:1px solid var(--border);text-align:center">preview not available for this file type</div>`;
+  }
+}
+
+// DELETE ACCOUNT
+function showDeleteAccountModal(){
+  showModal(`
+    <div class="modal-title" style="color:#cc4444">delete account</div>
+    <div style="font-size:11px;color:var(--text2);line-height:1.7;margin-bottom:16px">
+      this will permanently delete your account, all uploaded files, short urls, and galleries.
+      this action <b style="color:var(--bright)">cannot be undone</b>.
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <div>
+        <div class="field-label" style="margin-bottom:4px">your password</div>
+        <input type="password" id="del-acc-pass" placeholder="enter your password">
+      </div>
+      <div>
+        <div class="field-label" style="margin-bottom:4px">type <b style="color:var(--bright);letter-spacing:.1em">DELETE MY ACCOUNT</b> to confirm</div>
+        <input type="text" id="del-acc-confirm" placeholder="DELETE MY ACCOUNT" spellcheck="false">
+      </div>
+      <div class="err" id="del-acc-err"></div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn btn-sm" onclick="closeModal()">cancel</button>
+      <button class="btn btn-sm btn-danger" onclick="deleteAccount()">permanently delete</button>
+    </div>
+  `);
+}
+
+async function deleteAccount(){
+  const password=document.getElementById('del-acc-pass').value;
+  const confirm=document.getElementById('del-acc-confirm').value;
+  document.getElementById('del-acc-err').textContent='';
+  try{
+    await api('DELETE','/auth/account',{password,confirm});
+    toast('account deleted','info');
+    currentUser=null;
+    closeModal();
+    showPage('login');
+  }catch(e){
+    document.getElementById('del-acc-err').textContent=e.message;
+  }
+}
+
+// UTILS
 function copyText(text){navigator.clipboard.writeText(text).then(()=>toast('copied','info')).catch(()=>{const el=document.createElement('textarea');el.value=text;document.body.appendChild(el);el.select();document.execCommand('copy');el.remove();toast('copied','info');});}
 function fmtSize(b){if(!b)return'0 B';const units=['B','KB','MB','GB','TB'];let i=0,n=b;while(n>=1024&&i<units.length-1){n/=1024;i++;}return n.toFixed(i===0?0:1)+' '+units[i];}
 function fmtDate(ts){if(!ts)return'—';return new Date(ts*1000).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'2-digit'});}
+function fmtDateTime(ts){if(!ts)return'—';return new Date(ts*1000).toLocaleString('en-US',{month:'short',day:'numeric',hour:'2-digit',minute:'2-digit'});}
 function esc(s){return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
 </script>
 </body>
